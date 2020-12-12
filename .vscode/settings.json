@@ -1,0 +1,13 @@
+{
+  "eslint.debug": true,
+  "eslint.format.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.run": "onSave",
+  "eslint.validate": ["vue", "typescript", "javascrpt", "javascriptreact", "typescriptreact"],
+  "prettier.packageManager": "yarn",
+  "prettier.prettierPath": "./node_modules/prettier",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
