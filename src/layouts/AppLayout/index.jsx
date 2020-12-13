@@ -1,11 +1,11 @@
 import NavigationBar from '../NavigationBar';
 import PageContainer from '../PageContainer';
 
-const BasicLayout = () => (
+const AppLayout = ({ children }) => (
   <div>
     <NavigationBar />
-    <PageContainer />
+    <PageContainer>{children}</PageContainer>
   </div>
 );
 
-export default BasicLayout;
+export default AppLayout;

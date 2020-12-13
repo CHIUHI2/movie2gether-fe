@@ -1,15 +1,11 @@
 import 'antd-mobile/dist/antd-mobile.css';
 import './App.css';
 
-import { BrowserRouter as Router } from 'react-router-dom';
-
-import BasicLayout from './layouts/BasicLayout';
+import AppRouter from './router/AppRouter';
 
 const App = () => (
   <div className="App">
-    <Router>
-      <BasicLayout />
-    </Router>
+    <AppRouter />
   </div>
 );
 
