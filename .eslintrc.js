@@ -51,6 +51,7 @@ module.exports = {
       },
     ],
     'simple-import-sort/imports': 'error',
+    'react/prop-types': 0,
   },
   settings: {
     'import/resolver': {
