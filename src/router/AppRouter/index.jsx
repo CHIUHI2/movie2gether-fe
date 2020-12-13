@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import NotFoundPage from '../../components/exception/NotFoundPage';
+import LoginPage from '../../components/user/LoginPage';
 import AppLayout from '../../layouts/AppLayout';
-import NotFoundPage from '../../pages/exception/NotFoundPage';
-import LoginPage from '../../pages/user/LoginPage';
 import ProtectedRoute from '../ProtectedRoute';
 
 const AppRouter = () => (
