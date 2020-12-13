@@ -13,10 +13,7 @@ const useProvideAuth = () => {
     setUser({});
   };
 
-  const isLoggedIn = () => {
-    console.log('auth check');
-    return false;
-  };
+  const isLoggedIn = () => false;
 
   return [user, isLoggedIn, signIn, signOut];
 };
