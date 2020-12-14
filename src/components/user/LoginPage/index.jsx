@@ -1,14 +1,13 @@
-import { Button, InputItem } from 'antd-mobile';
+import './index.css';
+import { WhiteSpace } from 'antd-mobile';
+import LoginForm from '../LoginForm';
 
 const LoginPage = () => (
   <div>
-    <InputItem type="text" clear>
-      Username
-    </InputItem>
-    <InputItem type="Password" clear>
-      Password
-    </InputItem>
-    <Button>Login</Button>
+    <WhiteSpace />
+    <div className="user-login-title">Login</div>
+    <WhiteSpace />
+    <LoginForm />
   </div>
 );
 
