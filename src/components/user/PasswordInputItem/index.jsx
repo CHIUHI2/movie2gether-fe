@@ -5,7 +5,6 @@ const PasswordInputItem = ({ form }) => {
   const { getFieldProps, getFieldError } = form;
 
   const validatePassword = (rule, value, callback) => {
-    console.log(PASSWORD_VALIDATION_REGEX.test(value), value);
     const isStrongPassword = value && PASSWORD_VALIDATION_REGEX.test(value);
     if (isStrongPassword) {
       callback();
