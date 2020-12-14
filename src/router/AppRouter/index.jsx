@@ -14,7 +14,7 @@ const AppRouter = () => (
       <Switch>
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/test" />
-        <Route exact path="/movie/:id" component={MovieDetail} />
+        <Route exact path="/movies/:id" component={MovieDetail} />
         <ProtectedRoute exact path="/" />
         <Route component={NotFoundPage} />
       </Switch>
