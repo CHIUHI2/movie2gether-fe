@@ -1,4 +1,4 @@
-import { InputItem } from 'antd-mobile';
+import { InputItem, Toast } from 'antd-mobile';
 import { PASSWORD_VALIDATION_REGEX } from '../../../common/constants/regex';
 
 const PasswordInputItem = ({ form }) => {
@@ -9,12 +9,19 @@ const PasswordInputItem = ({ form }) => {
     if (isStrongPassword) {
       callback();
     } else {
-      callback(
-        new Error(
+      callback({
+        message:
           'Minimum 8 charaters, at lease one uppercase letter, one lowercase letter and one number',
-        ),
-      );
+        field: 'password',
+      });
     }
+  };
+
+  const showValidationErrorToast = () => {
+    Toast.hide();
+    const errorMessages = getFieldError('password');
+    const content = errorMessages.join(', ');
+    Toast.info(content);
   };
 
   return (
@@ -27,9 +34,7 @@ const PasswordInputItem = ({ form }) => {
           ],
         })}
         error={!!getFieldError('password')}
-        onErrorClick={() => {
-          alert(getFieldError('password'));
-        }}
+        onErrorClick={showValidationErrorToast}
         type="password"
         clear
         placeholder="****"

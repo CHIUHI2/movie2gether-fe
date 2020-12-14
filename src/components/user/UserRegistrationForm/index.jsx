@@ -1,4 +1,4 @@
-import { Button, List } from 'antd-mobile';
+import { Button, List, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import UsernameInputItem from '../UsernameInputItem';
 import EmailInputItem from '../EmailInputItem';
@@ -8,7 +8,7 @@ const UserRegistrationForm = ({ form }) => {
   const handleSubmit = () => {
     form.validateFields({ force: true }, (error) => {
       if (error) {
-        alert(error);
+        Toast.info('Please complete the form');
       }
     });
   };

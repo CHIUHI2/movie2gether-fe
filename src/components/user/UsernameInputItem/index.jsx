@@ -1,4 +1,4 @@
-import { InputItem } from 'antd-mobile';
+import { InputItem, Toast } from 'antd-mobile';
 
 const UsernameInputItem = ({ form }) => {
   const { getFieldProps, getFieldError } = form;
@@ -7,8 +7,15 @@ const UsernameInputItem = ({ form }) => {
     if (value && value.length >= 8) {
       callback();
     } else {
-      callback(new Error('At lease 8 characters for username'));
+      callback({ message: 'Please input at least 8 characters for username', field: 'username' });
     }
+  };
+
+  const showValidationErrorToast = () => {
+    Toast.hide();
+    const errorMessages = getFieldError('username');
+    const content = errorMessages.join(', ');
+    Toast.info(content);
   };
 
   return (
@@ -20,9 +27,7 @@ const UsernameInputItem = ({ form }) => {
         ],
       })}
       error={!!getFieldError('username')}
-      onErrorClick={() => {
-        alert(getFieldError('username'));
-      }}
+      onErrorClick={showValidationErrorToast}
       type="text"
       clear
       placeholder="Please input a username"
