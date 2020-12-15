@@ -1,11 +1,20 @@
-import './index.css'
+import './index.css';
 import { Carousel } from 'antd-mobile';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getRecommendMoviesByMode } from '../../../api/movie';
 
-const MovieListingRecommend = (props) => {
-  const { movies } = props;
+const MovieListingRecommend = ({ tab }) => {
+  const [movies, setMovies] = useState([]);
   const [slideIndex, setSlideIndex] = useState(0);
   const [imgHeight, setImgHeight] = useState(180);
+
+  useEffect(() => {
+    if (tab) {
+      getRecommendMoviesByMode(tab).then((response) => {
+        setMovies(response.data);
+      });
+    }
+  }, [tab]);
 
   return (
     <Carousel
@@ -15,31 +24,29 @@ const MovieListingRecommend = (props) => {
       slideWidth={0.8}
       autoplay
       infinite
-      afterChange={index => setSlideIndex(index)}
+      afterChange={(index) => setSlideIndex(index)}
     >
-      {
-        movies.map((movie, index) => (
-          <a
-            key={movie.id}
-            href={`/movies/${movie.id}`}
-            style={{
-              top: slideIndex === index ? -10 : 0,
-              height: imgHeight
+      {movies.map((movie, index) => (
+        <a
+          key={movie.id}
+          href={`/movies/${movie.id}`}
+          style={{
+            top: slideIndex === index ? -10 : 0,
+            height: imgHeight,
+          }}
+        >
+          <img
+            src={movie.url}
+            alt={movie.name}
+            onLoad={() => {
+              window.dispatchEvent(new Event('resize'));
+              setImgHeight('auto');
             }}
-          >
-            <img
-              src={movie.url}
-              alt={movie.name}
-              onLoad={() => {
-                window.dispatchEvent(new Event('resize'));
-                setImgHeight("auto");
-              }}
-            />
-          </a>
-        ))
-      }
+          />
+        </a>
+      ))}
     </Carousel>
   );
-}
+};
 
 export default MovieListingRecommend;
