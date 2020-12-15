@@ -1,0 +1,11 @@
+.genres-tag-container {
+  display: flex;
+  padding-top: 9px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.genres-tag-container > div {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
