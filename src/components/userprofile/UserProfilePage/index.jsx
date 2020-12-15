@@ -1,12 +1,30 @@
 import { Flex, Button,List,Pagination} from 'antd-mobile';
 import React, { useEffect, useState} from 'react';
-import { getUser, getSessionBySessionId } from '../../../api/userprofile/index';
-
+import { getUser, getSessionBySessionId } from "../../../api/userprofile";
+import ReviewModal from "../../review/ReviewModal";
+import { getReview } from "../../../api/review";
+// addReview
+// updateReview
 const {Item} = List;
 const {Brief} = Item;
 const UserProfilePage = () => {
   const [user, setUser] = useState({}); 
   const [sessions,setSessions] = useState([]); 
+  const [openModal, setOpenModal] = useState(false);
+  const [rating, setRating] = useState(null);
+  const [comment, setComment] = useState(null);
+
+  const showModal = () => {
+    getReview().then((response) => {
+      setRating(response.data.rating);
+      setComment(response.data.comment);
+      setOpenModal(true); 
+    })
+  };
+
+  const onClose = () => {
+    setOpenModal(false);
+  };
 
   const locale = {
     prevText: 'Prev',
@@ -30,9 +48,13 @@ const UserProfilePage = () => {
   const GenerateListItem = () => {
     return (
       <div>
+      <ReviewModal openModal={openModal} closeModal={onClose} 
+      rating={rating}
+      comment={comment}
+      movieTitle='Mr Bean'/>
           {
               sessions.map((session) =>
-              <Item key={session.id} multipleLine arrow="horizontal" onClick={() => {}} >
+              <Item key={session.id} multipleLine arrow="horizontal" onClick={showModal} >
               {session.movieName} <Brief> {session.date}</Brief>
             </Item>
               )
@@ -46,8 +68,6 @@ const UserProfilePage = () => {
       <Pagination total={5} current={1} locale={locale} />
     );
   }
-
-
     return (
       <>
        <div>
