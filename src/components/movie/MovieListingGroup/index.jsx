@@ -8,16 +8,18 @@ import { getMoviesByMode, getMoviesByModeAndGenre } from '../../../api/movie';
 const MovieListingGroup = ({ tab }) => {
   const history = useHistory();
   const [movies, setMovies] = useState([]);
+  const responseToGridData = (movieData) => {
+    return movieData.map((movie) => ({
+      id: movie.id,
+      icon: `https://image.tmdb.org/t/p/w500${movie.posterUrl}`,
+      text: movie.title,
+    }));
+  };
 
   useEffect(() => {
     if (tab) {
       getMoviesByMode(tab).then((response) => {
-        const gridData = response.data.map((movie) => ({
-          id: movie.id,
-          icon: `https://image.tmdb.org/t/p/w500${movie.posterUrl}`,
-          text: movie.title,
-        }));
-
+        const gridData = responseToGridData(response.data);
         setMovies(gridData);
       });
     }
@@ -25,7 +27,8 @@ const MovieListingGroup = ({ tab }) => {
 
   const updateMoviesByModeAndGenre = (filterGenre) => {
     getMoviesByModeAndGenre(tab, filterGenre).then((response) => {
-      setMovies(response.data);
+      const gridData = responseToGridData(response.data);
+      setMovies(gridData);
     });
   };
 
