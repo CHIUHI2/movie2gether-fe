@@ -15,6 +15,7 @@ const useProvideAuth = () => {
 
   const isLoggedIn = () => false;
 
+
   return [user, isLoggedIn, signIn, signOut];
 };
 
