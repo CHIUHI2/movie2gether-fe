@@ -1,0 +1,15 @@
+.space-carousel {
+  padding: 16px;
+  overflow: hidden;
+}
+
+.space-carousel a {
+  display: 'block';
+  position: 'relative';
+  box-shadow: '2px 1px 1px rgba(0, 0, 0, 0.2)';
+}
+
+.space-carousel img {
+  width : 100%;
+  vertical-align: 'top';
+}
