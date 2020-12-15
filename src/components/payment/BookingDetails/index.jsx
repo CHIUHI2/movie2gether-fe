@@ -13,7 +13,7 @@ const BookingDetails = () => (
     />
       </h3>
       <p>
-        <b>Movie:</b>
+        <b>Movie: </b>
       </p>
       <p>
         <b>Cinema:</b>

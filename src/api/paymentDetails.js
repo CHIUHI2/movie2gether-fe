@@ -1,4 +1,16 @@
 import api from './api';
 
-export const getBookingDetails = () => api.get('/booking');
-export const updatePaidStatus = (booking) => api.put(`/booking/${booking.id}`, booking);
+const updatePaidStatus = (booking) => api.put(`/booking/${booking.id}`, booking);
+const getUser = (id) => {
+  return api.get(`/user/${id}`);
+ };
+ const getBookingById = (id) => {
+  return api.get(`/booking?userId=${id}`);
+}
+const getSessionById = (id) => {
+  return api.get(`/session/?userId=${id}`);
+}
+const getMovieById = (id) => {
+  return api.get(`/booking?sessionId=${id}`);
+}
+export {getUser, getBookingById, getSessionById, getMovieById,updatePaidStatus};

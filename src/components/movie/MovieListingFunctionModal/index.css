@@ -1,0 +1,25 @@
+.sub-title-icon {
+  float: right;
+}
+
+.filterTag-container{
+  display: flex;
+  padding-top: 9px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.filterTag-container > div {
+  margin-left: 9px;
+  margin-bottom: 9px;
+}
+
+.filterTag-container-title {
+  width: 100%;
+}
+
+.filterTag-container-title > span {
+  float: left;
+  color : black;
+  font-size: medium;
+}
