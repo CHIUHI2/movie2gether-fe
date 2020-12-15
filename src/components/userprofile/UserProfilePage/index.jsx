@@ -8,19 +8,18 @@ import { getReview } from "../../../api/review";
 const {Item} = List;
 const {Brief} = Item;
 const UserProfilePage = () => {
-  const [user, setUser] = useState({}); 
-  const [sessions,setSessions] = useState([]); 
+  const [user, setUser] = useState({});
+  const [sessions,setSessions] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
 
-  const showModal = () => {
-    getReview().then((response) => {
+  const showModal = () => (
+    getReview('5fd77c99e5f7d6417d7abac4', '5fd81ac741ea7016828cfd40').then((response) => {
       setRating(response.data.rating);
       setComment(response.data.comment);
-      setOpenModal(true); 
-    })
-  };
+    }).finally(()=>{setOpenModal(true)}))
+  ;
 
   const onClose = () => {
     setOpenModal(false);
@@ -48,9 +47,11 @@ const UserProfilePage = () => {
   const GenerateListItem = () => {
     return (
       <div>
-      <ReviewModal openModal={openModal} closeModal={onClose} 
+      <ReviewModal openModal={openModal} closeModal={onClose}
       rating={rating}
+      setRating={setRating}
       comment={comment}
+      setComment={setComment}
       movieTitle='Mr Bean'/>
           {
               sessions.map((session) =>

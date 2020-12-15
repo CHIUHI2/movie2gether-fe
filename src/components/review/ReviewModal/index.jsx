@@ -1,15 +1,15 @@
 import { Modal, WhiteSpace, WingBlank } from 'antd-mobile';
-import React, { useState } from 'react';
+import React from 'react';
 import StarRating from '../StarRating';
 import CommentTextArea from '../CommentTextArea';
 
-const ReviewModal = ({openModal, closeModal, rating, comment, movieTitle}) => {
-  const [rating, setRating] = useState(null);
-  const [comment, setComment] = useState(null);
+const ReviewModal = ({openModal, closeModal, rating, setRating, comment, setComment, movieTitle}) => {
+  // const [rating, setRating] = useState(null);
+  // const [comment, setComment] = useState(null);
 
   const onClose = () => {
     closeModal();
-    console.log(userId + movieId);
+    // console.log(userId + movieId);
 };
 
   return (
