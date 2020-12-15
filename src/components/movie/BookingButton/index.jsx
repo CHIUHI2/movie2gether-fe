@@ -10,9 +10,11 @@ const BookingButton = ({ movieId }) => {
   };
 
   return (
-    <Button type="primary" inline size="small" onClick={onClick}>
-      <PlusOutlined /> Booking
-    </Button>
+    <div>
+      <Button type="primary" inline size="small" onClick={onClick}>
+        <PlusOutlined /> Booking
+      </Button>
+    </div>
   );
 };
 
