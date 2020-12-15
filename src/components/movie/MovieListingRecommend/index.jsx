@@ -36,8 +36,8 @@ const MovieListingRecommend = ({ tab }) => {
           }}
         >
           <img
-            src={movie.url}
-            alt={movie.name}
+            src={`https://image.tmdb.org/t/p/w500${movie.posterUrl}`}
+            alt={movie.title}
             onLoad={() => {
               window.dispatchEvent(new Event('resize'));
               setImgHeight('auto');

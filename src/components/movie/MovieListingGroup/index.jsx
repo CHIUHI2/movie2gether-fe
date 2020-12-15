@@ -12,7 +12,13 @@ const MovieListingGroup = ({ tab }) => {
   useEffect(() => {
     if (tab) {
       getMoviesByMode(tab).then((response) => {
-        setMovies(response.data);
+        const gridData = response.data.map((movie) => ({
+          id: movie.id,
+          icon: `https://image.tmdb.org/t/p/w500${movie.posterUrl}`,
+          text: movie.title,
+        }));
+
+        setMovies(gridData);
       });
     }
   }, [tab]);
