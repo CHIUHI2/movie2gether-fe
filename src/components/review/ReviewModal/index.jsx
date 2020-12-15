@@ -6,7 +6,7 @@ import CommentTextArea from '../CommentTextArea';
 const ReviewModal = () => {
   const [openModal, setOpenModal] = useState(false);
   const [rating, setRating] = useState(null);
-  // const [comment, setRating] = useState(null);
+  const [comment, setComment] = useState(null);
 
   const showModal = () => {
     setOpenModal(true);
@@ -36,7 +36,7 @@ const ReviewModal = () => {
         ]}
       >
         <WhiteSpace />
-        <CommentTextArea />
+        <CommentTextArea comment={comment} setComment={setComment}/>
         <WhiteSpace />
         <StarRating rating={rating} setRating={setRating} />
       </Modal>
