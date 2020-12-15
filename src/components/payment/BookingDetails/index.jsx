@@ -1,8 +1,16 @@
+import { Image } from 'antd';
+import icon from './icon.png';
+import './index.css';
+
 const BookingDetails = () => (
   <div>
     <div>
       <h3>
-        <u>Booking Details</u>
+        <u>Booking Details </u>
+        <Image className="image"
+      width={100}
+      src={icon}
+    />
       </h3>
       <p>
         <b>Movie:</b>
