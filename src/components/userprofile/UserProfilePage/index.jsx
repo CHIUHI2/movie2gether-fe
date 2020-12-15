@@ -1,12 +1,13 @@
 import { Flex, Button,List,Pagination} from 'antd-mobile';
 import React, { useEffect, useState} from 'react';
-import { getUser } from '../../../api/userprofile/index';
+import { getUser, getSessionBySessionId } from '../../../api/userprofile/index';
 
 const UserProfilePage = () => {
   const {Item} = List;
   const {Brief} = Item;
-  const [user, setUser] = useState({userName: '', email:''}); 
- 
+  const [user, setUser] = useState({}); 
+  const [sessions,setSessions] = useState([]); 
+
   const locale = {
     prevText: 'Prev',
     nextText: 'Next',
@@ -16,25 +17,30 @@ const UserProfilePage = () => {
     getUser('1').then((response) => {
       setUser(response.data);
     })
+      
   }, [])
 
-const GenerateListItem = () => {
-  const initArraySize = Array.from(Array(5).keys());
-  
-  return (
-    
-    <div>
-        {
+  useEffect(() => {
+    if(user.id){
+     getSessionBySessionId(user.id).then((response) => {
+          setSessions(response.data)
+        })
+      }
+  }, [user.id])
 
-            initArraySize.map((values) =>
-            <Item key={values} multipleLine arrow="horizontal" onClick={() => {}} >
-            values <Brief> Date</Brief>
-          </Item>
-            )
-        }
-    </div>
-);
-}
+  const GenerateListItem = () => {
+    return (
+      <div>
+          {
+              sessions.map((session) =>
+              <Item key={session.id} multipleLine arrow="horizontal" onClick={() => {}} >
+              {session.movieName} <Brief> {session.date}</Brief>
+            </Item>
+              )
+          }
+      </div>
+  );
+  }
 
     return (
       <>
