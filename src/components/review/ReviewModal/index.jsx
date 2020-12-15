@@ -1,31 +1,31 @@
 import { Modal, Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import React, { useState } from 'react';
 import StarRating from '../StarRating';
 import CommentTextArea from '../CommentTextArea';
 
-import React, { useState } from 'react';
-
 const ReviewModal = () => {
-  const [modal1, setModal1] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [rating, setRating] = useState(null);
+  // const [comment, setRating] = useState(null);
 
   const showModal = () => {
-    setModal1(true);
+    setOpenModal(true);
   };
 
   const onClose = () => {
-    console.log('closed');
-    setModal1(false);
+    setOpenModal(false);
   };
 
   return (
     <WingBlank>
-      <Button onClick={showModal}>Movie Title</Button>
+      <Button onClick={showModal}>Review</Button>
       <WhiteSpace />
       <Modal
-        visible={modal1}
+        visible={openModal}
         transparent
         maskClosable={false}
         onClose={onClose}
-        title="Review"
+        title="Movie Title"
         footer={[
           {
             text: 'Save',
@@ -38,7 +38,7 @@ const ReviewModal = () => {
         <WhiteSpace />
         <CommentTextArea />
         <WhiteSpace />
-        <StarRating />
+        <StarRating rating={rating} setRating={setRating} />
       </Modal>
     </WingBlank>
   );

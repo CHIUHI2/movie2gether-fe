@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
+import './index.css';
 import { StarFilled } from '@ant-design/icons';
 
-const StarRating = () => {
-  // later initial is fetch from db, not null
-  const [rating, setRating] = useState(null);
+const StarRating = ({rating, setRating}) => {
 
   return (
     <div>
@@ -15,8 +14,8 @@ const StarRating = () => {
 
               <StarFilled
                 className="star"
-                style={ ratingvalue <= rating ? {color: "#ffc107", fontSize: '30px'}: {color:"#e4e5e9", fontSize: '30px'}}
-                onClick={()=>{console.log(ratingvalue); setRating(ratingvalue)}}
+                style={ ratingvalue <= rating ? {color: "#ffc107"}: {color:"#e4e5e9"}}
+                onClick={()=>setRating(ratingvalue)}
                 />
         );
       })}
