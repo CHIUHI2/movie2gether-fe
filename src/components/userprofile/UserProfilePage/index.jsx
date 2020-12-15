@@ -2,9 +2,9 @@ import { Flex, Button,List,Pagination} from 'antd-mobile';
 import React, { useEffect, useState} from 'react';
 import { getUser, getSessionBySessionId } from '../../../api/userprofile/index';
 
+const {Item} = List;
+const {Brief} = Item;
 const UserProfilePage = () => {
-  const {Item} = List;
-  const {Brief} = Item;
   const [user, setUser] = useState({}); 
   const [sessions,setSessions] = useState([]); 
 
@@ -17,7 +17,6 @@ const UserProfilePage = () => {
     getUser('1').then((response) => {
       setUser(response.data);
     })
-      
   }, [])
 
   useEffect(() => {
@@ -42,23 +41,30 @@ const UserProfilePage = () => {
   );
   }
 
+  const PaginationItem = () => {
+    return (
+      <Pagination total={5} current={1} locale={locale} />
+    );
+  }
+
+
     return (
       <>
        <div>
        <Flex justify="center">User Profile</Flex>
        <List renderHeader={() => 'User Information'} className="my-list">
-        <Item extra="">User Name: <span>{user.userName}</span></Item>
-        <Item extra="">Email: <span>{user.email}</span></Item>
-        <Item extra="" arrow="horizontal" multipleLine onClick={() => {}}>My Friend List </Item>
+        <Item>User Name: <span>{user.userName}</span></Item>
+        <Item>Email: <span>{user.email}</span></Item>
+        <Item arrow="horizontal" multipleLine onClick={() => {}}>My Friend List </Item>
       </List>
       <List renderHeader={() => 'Movie History'} className="my-list">
         <GenerateListItem />
       </List>
        </div>
-       <Pagination total={5} current={1} locale={locale} />
+        <PaginationItem />
        <Button>Back</Button>
       </>
     );
   };
-  
+  // todo pagination to constant
   export default UserProfilePage;
