@@ -51,7 +51,7 @@ function renderTabContent(props) {
 const MovieListingPage = () => {
 	const tabs = [
 		{ title: 'In Theatres', key: 'onShow' },
-		{ title: 'Comming Soon', key: 'comming' }
+		{ title: 'Coming Soon', key: 'coming' }
   ];
 
   const initTab = "onShow";
