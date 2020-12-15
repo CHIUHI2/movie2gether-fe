@@ -24,7 +24,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-sticky": "^6.0.3",
-    "serve": "^11.3.2"
+    "serve": "^11.3.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@umijs/fabric": "^2.3.1",

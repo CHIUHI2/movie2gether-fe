@@ -8,4 +8,8 @@ const getRecommendMoviesByMode = (mode) => {
   return api.get(`/movies?isRecommend=true&mode=${mode}`);
 };
 
-export { getMoviesByMode, getRecommendMoviesByMode };
+const getMoviesByModeAndGenre = (mode, genre) => {
+  return api.get(`/movies?mode=${mode}&genre=${genre}`);
+};
+
+export { getMoviesByMode, getRecommendMoviesByMode, getMoviesByModeAndGenre };
