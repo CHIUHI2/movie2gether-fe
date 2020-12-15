@@ -1,36 +1,47 @@
-import './index.css';
-import { Button, Flex, WhiteSpace } from 'antd-mobile';
-
-// import { useParams } from 'react-router-dom';
+import { Flex, WhiteSpace, WingBlank } from 'antd-mobile';
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { getMovieDetail } from '../../../api/movie/movie';
+import MoviePoster from '../MoviePoster';
+import MovieGenres from '../MovieGenres';
+import MovieRatings from '../MovieRatings';
+import MovieOverview from '../MovieOverview';
+import BookingButton from '../BookingButton';
 
 const MovieDetail = () => {
-  // const { id } = useParams();
+  const { id } = useParams();
+  const history = useHistory();
+  const [movieDetail, setMovieDetail] = useState({});
 
-  const onClick = () => {
-    console.log('link to booking');
-  };
+  useEffect(() => {
+    getMovieDetail(id)
+      .then((response) => {
+        setMovieDetail(response.data);
+      })
+      .catch(() => {
+        history.push('/404');
+      });
+  }, [id]);
 
   return (
     <>
-      <img
-        className="movie-detail-poster"
-        src="https://image.tmdb.org/t/p/w500/vlOgaxUiMOA8sPDG9n3VhQabnEi.jpg"
-        alt="Poster"
-      />
-      <Flex justify="between">
-        <h2>movieDetail.title</h2>
-        <Button type="primary" inline size="small" onClick={onClick}>
-          + Booking
-        </Button>
-      </Flex>
-      <div>movieDetail.releaseDate</div>
-      <div>movieDetail.genres</div>
-      <WhiteSpace size="xl" />
-      <div>rating</div>
-      <WhiteSpace size="xl" />
-      <div>Synopsis</div>
-      <WhiteSpace size="xl" />
-      <div>movieDetail.overview</div>
+      {movieDetail && (
+        <WingBlank>
+          <WhiteSpace />
+          <MoviePoster posterUrl={movieDetail.posterUrl} width={400} />
+          <Flex justify="between">
+            <h2>{movieDetail.title}</h2>
+            <BookingButton movieId={movieDetail.id} />
+          </Flex>
+          <div>{movieDetail.releaseDate}</div>
+          <WhiteSpace size="sm" />
+          <MovieGenres genres={movieDetail.genres} />
+          <WhiteSpace size="lg" />
+          <MovieRatings rating={movieDetail.voteAverage} />
+          <WhiteSpace size="lg" />
+          <MovieOverview overview={movieDetail.overview} />
+        </WingBlank>
+      )}
     </>
   );
 };
