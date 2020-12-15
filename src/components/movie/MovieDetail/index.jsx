@@ -1,6 +1,7 @@
 import { Flex, WhiteSpace, WingBlank } from 'antd-mobile';
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { getMovieDetail } from '../../../api/movie/movie';
 import MoviePoster from '../MoviePoster';
 import MovieGenres from '../MovieGenres';
@@ -23,6 +24,10 @@ const MovieDetail = () => {
       });
   }, [id]);
 
+  const getFormattedReleaseDate = (dateTime) => {
+    return dayjs(dateTime).format('YYYY-MM-DD');
+  };
+
   return (
     <>
       {movieDetail && (
@@ -33,7 +38,7 @@ const MovieDetail = () => {
             <h2>{movieDetail.title}</h2>
             <BookingButton movieId={movieDetail.id} />
           </Flex>
-          <div>{movieDetail.releaseDate}</div>
+          <div>{getFormattedReleaseDate(movieDetail.releaseDate)}</div>
           <WhiteSpace size="sm" />
           <MovieGenres genres={movieDetail.genres} />
           <WhiteSpace size="lg" />
