@@ -95,7 +95,7 @@ const Payment = () => {
       <div>
         <h1 className="payment">Payment</h1>
       </div>
-      <BookingDetails sessionId={sessionId} />
+      <BookingDetails sessionId={sessionId} seatNumber={seatNumber}/>
       <div>
         <h3>Payment Details</h3>
       </div>

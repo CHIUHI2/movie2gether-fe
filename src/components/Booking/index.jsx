@@ -219,7 +219,7 @@ const BookingPage = () => {
                 pathname: '/payment',
                 state: {
                   sessionId: session.id,
-                  seat: selectedSeatNumner,
+                  seatNumber: selectedSeatNumner,
                 },
               });
             }}
