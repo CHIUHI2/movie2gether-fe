@@ -12,10 +12,13 @@ const UserProfilePage = () => {
   const [modalMovieTitle, setModalMovieTitle] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [modalMovieId, setModalMovieId] = useState(null);
 
-  const showModal = (movieTitle) => {
-    setOpenModal(true);
+  const showModal = (movieTitle, movieId) => {
     setModalMovieTitle(movieTitle);
+    setModalMovieId(movieId);
+    setOpenModal(true);
+    
   };
 
   const onClose = () => {
@@ -31,6 +34,7 @@ const UserProfilePage = () => {
     getBookingsWithPaginationByUserId(0,5,"5fd81ac741ea7016828cfd39").then((response) => {
       setTotalPages(response.data.totalPages);
       setSessions(response.data.content)
+          
        })
      
   }, [])
@@ -39,6 +43,7 @@ const UserProfilePage = () => {
     setCurrentPage(pageNum);
     getBookingsWithPaginationByUserId(pageNum-1,5,"5fd81ac741ea7016828cfd39").then((response) => {
       setSessions(response.data.content)
+  
        })
   }
 
@@ -53,14 +58,22 @@ const UserProfilePage = () => {
 
   const GenerateListItem = () => {
     return (
+      
       <div>
+        {
+          openModal && 
          <ReviewModal
           openModal={openModal}
           closeModal={onClose}
           movieTitle={modalMovieTitle}
-        />
+          movieId={modalMovieId}
+          userId="5fd81ac741ea7016828cfd39"
+          />
+        }
+        
+        
         {sessions.map((session) => (
-          <Item key={session.sessionDetail.id} multipleLine arrow="horizontal" onClick={() => showModal(session.sessionDetail.movie.title)}>
+          <Item key={session.sessionDetail.id} multipleLine arrow="horizontal" onClick={() => showModal(session.sessionDetail.movie.title, session.sessionDetail.movie.id)}>
             {session.sessionDetail.movie.title} <Brief> {session.sessionDetail.endTime}</Brief>
           </Item>
         ))}

@@ -4,13 +4,14 @@ import './index.css';
 import React, { useState, useEffect } from 'react';
 import { getReview, addReview, updateReview } from '../../../api/review';
 
-const ReviewModal = ({ openModal, closeModal, movieTitle }) => {
+const ReviewModal = ({ openModal, closeModal, movieTitle, movieId, userId }) => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
   const [reviewId, setReviewId] = useState(null);
+  
 
   useEffect(() => {
-    getReview('5fd77c99e5f7d6417d7abac2', '5fd81ac741ea7016828cfd39').then((response) => {
+    getReview(movieId, userId).then((response) => {
       setRating(response.data.rating);
       setComment(response.data.comment);
       setReviewId(response.data.id);
@@ -20,8 +21,8 @@ const ReviewModal = ({ openModal, closeModal, movieTitle }) => {
   const onClose = () => {
     if (reviewId == null && rating != null && comment != null) {
       const review = {
-        movieId: '5fd77c99e5f7d6417d7abac2',
-        userId: '5fd81ac741ea7016828cfd39',
+        movieId,
+        userId,
         rating,
         comment,
       };
@@ -32,8 +33,8 @@ const ReviewModal = ({ openModal, closeModal, movieTitle }) => {
       });
     } else {
       const updatedReview = {
-        movieId: '5fd77c99e5f7d6417d7abac2',
-        userId: '5fd81ac741ea7016828cfd39',
+        movieId,
+        userId,
         rating,
         comment,
       };

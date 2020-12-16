@@ -1,20 +1,15 @@
-// import api from '../api';
-import axios from 'axios';
-
-const axiosTestingInstance = axios.create({
-   baseURL: "http://localhost:8085/"
- });
+import api from '../api';
 
 const addReview = (data) => {
-  return axiosTestingInstance.post('/reviews/', data);
+  return api.post('/reviews', data);
   };
 
 const updateReview = (id, data) => {
-  return axiosTestingInstance.put(`/reviews/${id}`, data);
+  return api.put(`/reviews/${id}`, data);
   };
 
 const getReview = (movieId, userId) => {
-  return axiosTestingInstance.get(`/reviews?movieId=${movieId}&userId=${userId}`);
+  return api.get(`/reviews?movieId=${movieId}&userId=${userId}`);
 };
 
 
