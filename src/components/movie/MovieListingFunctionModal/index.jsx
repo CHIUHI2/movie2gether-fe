@@ -47,7 +47,7 @@ const MovieListingFunctionModal = ({ applyFilterHandler }) => {
   };
 
   const onClickFilter = (filter) => {
-    setSelectedGenre(selectedGenre === filter ? null : filter);
+    setSelectedGenre(selectedGenre === filter ? "all" : filter);
   };
 
   return (
