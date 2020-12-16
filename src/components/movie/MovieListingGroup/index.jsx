@@ -11,8 +11,7 @@ const MovieListingGroup = ({ tab }) => {
   const responseToGridData = (movieData) => {
     return movieData.map((movie) => ({
       id: movie.id,
-      icon: `https://image.tmdb.org/t/p/w500${movie.posterUrl}`,
-      text: movie.title,
+      icon: `https://image.tmdb.org/t/p/w500${movie.posterUrl}`
     }));
   };
 
@@ -26,10 +25,18 @@ const MovieListingGroup = ({ tab }) => {
   }, [tab]);
 
   const updateMoviesByModeAndGenre = (filterGenre) => {
-    getMoviesByModeAndGenre(tab, filterGenre).then((response) => {
-      const gridData = responseToGridData(response.data);
-      setMovies(gridData);
-    });
+    if(filterGenre === "all") {
+      getMoviesByMode(tab).then((response) => {
+        const gridData = responseToGridData(response.data);
+        setMovies(gridData);
+      });
+    }
+    else {
+      getMoviesByModeAndGenre(tab, filterGenre).then((response) => {
+        const gridData = responseToGridData(response.data);
+        setMovies(gridData);
+      });
+    }
   };
 
   const moveToDetail = (item) => {

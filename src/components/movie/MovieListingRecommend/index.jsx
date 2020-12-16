@@ -17,35 +17,40 @@ const MovieListingRecommend = ({ tab }) => {
   }, [tab]);
 
   return (
-    <Carousel
-      className="space-carousel"
-      frameOverflow="visible"
-      cellSpacing={10}
-      slideWidth={0.8}
-      autoplay
-      infinite
-      afterChange={(index) => setSlideIndex(index)}
-    >
-      {movies.map((movie, index) => (
-        <a
-          key={movie.id}
-          href={`/movies/${movie.id}`}
-          style={{
-            top: slideIndex === index ? -10 : 0,
-            height: imgHeight,
-          }}
-        >
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.posterUrl}`}
-            alt={movie.title}
-            onLoad={() => {
-              window.dispatchEvent(new Event('resize'));
-              setImgHeight('auto');
+    <>
+      <div className="sub-title">
+          Top Popular
+      </div>
+      <Carousel
+        className="space-carousel"
+        frameOverflow="visible"
+        cellSpacing={10}
+        slideWidth={0.8}
+        autoplay
+        infinite
+        afterChange={(index) => setSlideIndex(index)}
+      >
+        {movies.map((movie, index) => (
+          <a
+            key={movie.id}
+            href={`/movies/${movie.id}`}
+            style={{
+              top: slideIndex === index ? -10 : 0,
+              height: imgHeight,
             }}
-          />
-        </a>
-      ))}
-    </Carousel>
+          >
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.posterUrl}`}
+              alt={movie.title}
+              onLoad={() => {
+                window.dispatchEvent(new Event('resize'));
+                setImgHeight('auto');
+              }}
+            />
+          </a>
+        ))}
+      </Carousel>
+    </>
   );
 };
 
