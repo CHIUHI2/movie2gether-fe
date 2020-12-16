@@ -1,0 +1,54 @@
+.square {
+  width: 50%;
+}
+
+.square:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.am-card {
+  margin-top: 5px;
+}
+
+.session-item {
+  display: flex;
+  flex-direction: row;
+}
+.session-item div {
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  min-height: 50px;
+}
+
+.cinema-item div {
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  min-height: 50px;
+}
+.cinema-item.selected div {
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.session-item.selected div {
+  display: flex;
+  border: 1px solid;
+  border-radius: 10px;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  min-height: 50px;
+}
+
+.session-item .am-button {
+  min-width: 80px;
+}

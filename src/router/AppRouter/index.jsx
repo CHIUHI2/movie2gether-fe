@@ -10,12 +10,14 @@ import LoginPage from '../../components/user/LoginPage';
 import UserRegistrationPage from '../../components/user/UserRegistrationPage';
 import AppLayout from '../../layouts/AppLayout';
 import UserProfilePage from '../../components/userprofile/UserProfilePage';
+import BookingPage from '../../components/Booking';
 
 const AppRouter = () => (
   <AppLayout>
     <Router>
       <Switch>
         <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/booking" component={BookingPage} />
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/user/register" component={UserRegistrationPage} />
         <Route exact path="/paymentSuccess" component={PaymentSuccess} />
