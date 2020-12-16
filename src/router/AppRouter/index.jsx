@@ -6,12 +6,14 @@ import MovieDetail from '../../components/movie/MovieDetail';
 import LoginPage from '../../components/user/LoginPage';
 import UserRegistrationPage from '../../components/user/UserRegistrationPage';
 import AppLayout from '../../layouts/AppLayout';
+import BookingPage from '../../components/Booking';
 
 const AppRouter = () => (
   <AppLayout>
     <Router>
       <Switch>
         <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/booking" component={BookingPage} />
         <Route exact path="/user/register" component={UserRegistrationPage} />
         <Route exact path="/test" />
         <Route exact path="/movies/:id" component={MovieDetail} />
