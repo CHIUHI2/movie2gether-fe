@@ -2,7 +2,7 @@ import { Button, Card, Carousel, List, Pagination, Picker } from 'antd-mobile';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getCinemas } from '../../api/cinema/cinema';
 import { getOnShowMovie } from '../../api/movie/movie';
 import { getSessions } from '../../api/session/sessionApi';
@@ -15,6 +15,7 @@ const PAGINATION_LOCALE = {
 };
 
 const BookingPage = () => {
+  const { movieId } = useParams();
   const PAGE_CAPACITY = 10;
   const history = useHistory();
 
@@ -33,7 +34,8 @@ const BookingPage = () => {
   useEffect(() => {
     getOnShowMovie('onShow', { isRecommend: false }).then(({ data }) => {
       setMovies(data);
-      setSelectedMovieIndex(0);
+      const targetMovieId = data.findIndex((movie) => movie.id === movieId);
+      setSelectedMovieIndex(targetMovieId >= 0 ? targetMovieId : 0);
     });
   }, []);
 

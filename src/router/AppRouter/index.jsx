@@ -20,6 +20,7 @@ const AppRouter = () => (
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/user/register" component={UserRegistrationPage} />
         <ProtectedRoute exact path="/booking" component={BookingPage} />
+        <ProtectedRoute exact path="/booking/:movieId" component={BookingPage} />
         <ProtectedRoute exact path="/payment" component={Payment} />
         <ProtectedRoute exact path="/paymentSuccess" component={PaymentSuccess} />
         <ProtectedRoute exact path="/paymentFailed" component={PaymentFailed} />
