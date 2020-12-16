@@ -4,12 +4,19 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Toast, SegmentedControl, WingBlank } from 'antd-mobile';
 import { useState } from 'react';
+import _ from 'lodash';
 import BookingDetails from '../BookingDetails';
+import { createBooking } from '../../../api/booking';
+import useProvideAuth from '../../../hooks/use-provide-auth';
 
 const Payment = () => {
   const history = useHistory();
   const location = useLocation();
   const [type, setType] = useState('Visa');
+  const [user] = useProvideAuth();
+  const { id: userId } = user;
+  const sessionId = _.get(location, 'state.sessionId', '');
+  const seatNumber = _.get(location, 'state.seatNumber', '');
 
   const checkCardNumber = (event) => {
     const cardNumList = event.target.value.split('');
@@ -17,12 +24,14 @@ const Payment = () => {
       Toast.info('Invalid card number !!!');
     }
   };
+
   const checkValidCVC = (event) => {
     const cvcCode = event.target.value.split('');
     if (cvcCode.length > 3) {
       Toast.info('Invalid CVC code !!!');
     }
   };
+
   const checkValidName = (event) => {
     const name = event.target.value;
     const input = /^[A-Za-z- ]+$/;
@@ -30,6 +39,7 @@ const Payment = () => {
       Toast.info('Invalid Name !!!');
     }
   };
+
   const checkValidDate = (event) => {
     const date = event.target.value;
     const input = /^[A-Za-z-]+$/;
@@ -37,6 +47,7 @@ const Payment = () => {
       Toast.info('Invalid date !!!');
     }
   };
+
   const onFinish = (values) => {
     const cardNumCheck = values.cardNum.split('');
     const cvcCheck = values.cvc.split('');
@@ -57,38 +68,40 @@ const Payment = () => {
     if (inputDate < currentDate) {
       alert('Invalid date!!');
     }
+
     if (checking) {
-      history.push('/paymentSuccess');
+      createBooking(userId, sessionId, seatNumber)
+        .then((response) => {
+          history.push('/paymentSuccess', { orderId: response.data.id });
+        })
+        .catch(() => {
+          history.push('/paymentFailed');
+        });
     } else {
       history.push('/paymentFailed');
     }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-  const onChange = (e) => {
-    console.log(`selectedIndex:${e.nativeEvent.selectedSegmentIndex}`);
-  };
+
   const onValueChange = (value) => {
-    console.log(value);
     setType({ type: value });
   };
+
   return (
     <>
       <div>
         <h1 className="payment">Payment</h1>
       </div>
-      <BookingDetails sessionId={location.state.sessionId} />
+      <BookingDetails sessionId={sessionId} />
       <div>
         <h3>Payment Details</h3>
       </div>
       <WingBlank size="lg" className="sc-example">
         <p className="sub-title">Card Type</p>
-        <SegmentedControl
-          values={['Visa', 'Master']}
-          onChange={onChange}
-          onValueChange={onValueChange}
-        />
+        <SegmentedControl values={['Visa', 'Master']} onValueChange={onValueChange} />
       </WingBlank>
       <Form
         name="basic"
