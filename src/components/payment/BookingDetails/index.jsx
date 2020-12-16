@@ -46,7 +46,7 @@ const BookingDetails = ({ sessionId, seatNumber }) => {
               {getMovieTimeInHHmmFormat(bookingDetails.endTime)}
             </p>
             <p>
-              <b>Seat:</b> {seatNumber}
+              <b>Seat(s):</b> {seatNumber.sort().join(', ')}
             </p>
           </>
         )}

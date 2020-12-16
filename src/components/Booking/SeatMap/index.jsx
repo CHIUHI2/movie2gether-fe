@@ -2,14 +2,19 @@ import { useEffect, useState } from 'react';
 import './style.css';
 import classNames from 'classnames';
 
-const SeatingMap = (props = { seats: [], bookings: [], onSelectSeat: () => {} }) => {
+const SeatingMap = (props = { seats: [], bookings: [], onSelectSeatNumbers: () => {} }) => {
   const [seats, setSeats] = useState(props.seats);
   const [bookings, setBookings] = useState(props.bookings);
-  const [selectedSeatIndex, setSelectedSeatIndex] = useState(null);
+  const [selectedSeatIndexes, setSelectedSeatIndexes] = useState([]);
   useEffect(() => {
     setSeats(props.seats);
     setBookings(props.bookings);
   }, [props]);
+
+  useEffect(() => {
+    props.onSelectSeatNumbers(selectedSeatIndexes.map((index) => seats[index].number));
+  }, [selectedSeatIndexes]);
+
   return (
     <div className="seating-map">
       {seats.map((seat, index) => {
@@ -18,14 +23,15 @@ const SeatingMap = (props = { seats: [], bookings: [], onSelectSeat: () => {} })
           <div
             onClick={() => {
               if (!booked) {
-                setSelectedSeatIndex(index);
-                props.onSelectSeat(seat.number);
+                if (selectedSeatIndexes.includes(index))
+                  setSelectedSeatIndexes(selectedSeatIndexes.filter((i) => i !== index));
+                else setSelectedSeatIndexes([...selectedSeatIndexes, index]);
               }
             }}
             className={classNames({
               seat: true,
               booked,
-              selected: selectedSeatIndex === index,
+              selected: selectedSeatIndexes.includes(index),
             })}
           >
             {seat.number}
