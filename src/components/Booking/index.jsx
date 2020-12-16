@@ -150,7 +150,7 @@ const BookingPage = () => {
                     selected: index === selectedCinemaIndex,
                   })}
                   onClick={() => {
-                    setSelectecCinemaIndex(index !== selectedCinemaIndex ? index : null);
+                    setSelectecCinemaIndex(index);
                   }}
                 >
                   <div>{cinema.name}</div>
@@ -186,9 +186,12 @@ const BookingPage = () => {
                       setSelectedSessionIndex(index);
                     }}
                   >
-                    <div>{`${dayjs(session.startTime).format('HH:mm')} - ${dayjs(
-                      session.endTime,
-                    ).format('HH:mm')}`}</div>
+                    <div>
+                      <div>{`${dayjs(session.startTime).format('ddd, MMMM D')}`}</div>
+                      <div>{`${dayjs(session.startTime).format('HH:mm')} - ${dayjs(
+                        session.endTime,
+                      ).format('HH:mm')}`}</div>
+                    </div>
                   </div>
                 ))}
               </div>
