@@ -214,6 +214,7 @@ const BookingPage = () => {
           <Button
             onClick={() => {
               const session = sessions[selectedSessionIndex];
+              console.log(`Start booking with seat ${selectedSeatNumner}  session: ${session.id}`);
               history.push({
                 pathname: '/payment',
                 state: {
