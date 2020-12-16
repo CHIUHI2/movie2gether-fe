@@ -12,5 +12,8 @@
 }
 
 .seating-map .seat.selected {
+  background-color: cyan;
+}
+.seating-map .seat.booked {
   background-color: red;
 }
