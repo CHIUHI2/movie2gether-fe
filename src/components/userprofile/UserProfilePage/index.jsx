@@ -32,7 +32,7 @@ const UserProfilePage = () => {
   };
 
   const moveBack = () => {
-    history.push("/");
+    history.push('/')
   };
 
   const locale = {
@@ -42,7 +42,11 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     getBookingsWithPaginationByUserId(0,5,user.id).then((response) => {
-      setTotalPages(response.data.totalPages);
+      if(response.data.totalPages <= 0){
+        setTotalPages(1);
+      }else {
+        setTotalPages(response.data.totalPages);
+      }
       setSessions(response.data.content)
        })
      
@@ -56,8 +60,7 @@ const UserProfilePage = () => {
   }
 
   const DisplayNoBookingHistory = () => {
-    if (sessions.length <=0){
-      setTotalPages(1)
+    if (sessions.length <= 0){
       return (
         <div className="no-booking-history">You have not booked any movie yet</div>
         )
