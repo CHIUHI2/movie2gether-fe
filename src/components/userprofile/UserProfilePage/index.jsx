@@ -32,7 +32,7 @@ const UserProfilePage = () => {
   };
 
   const moveBack = () => {
-    history.push("/");
+    history.goBack()
   };
 
   const locale = {
@@ -42,7 +42,11 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     getBookingsWithPaginationByUserId(0,5,user.id).then((response) => {
-      setTotalPages(response.data.totalPages);
+      if(response.data.totalPages <= 0){
+        setTotalPages(1);
+      }else {
+        setTotalPages(response.data.totalPages);
+      }
       setSessions(response.data.content)
        })
      
@@ -56,10 +60,9 @@ const UserProfilePage = () => {
   }
 
   const DisplayNoBookingHistory = () => {
-    if (sessions.length <=0){
-      setTotalPages(1)
+    if (sessions.length <= 0){
       return (
-        <div className="no-booking-history">You have not booked any movie yet</div>
+        <div className="no-booking-history">I have no watched movies</div>
         )
     }
     return <div />
@@ -95,10 +98,11 @@ const UserProfilePage = () => {
   const PaginationItem = () => {
     return <Pagination total={totalPages} current={currentPage} locale={locale} onChange={changePage}/>;
   };
+  
   return (
     <>
       <div>
-        <Flex justify="center">User Profile</Flex>
+        <Flex justify="center"><span className="profile-header">User Profile</span></Flex>
         <List renderHeader={() => 'User Information'} className="my-list">
           <Item>
             User Name: <span>{user.userName}</span>
@@ -115,7 +119,7 @@ const UserProfilePage = () => {
         </List>
       </div>
       <PaginationItem />
-      <Button onClick={moveBack}>Back</Button>
+      <Button onClick={moveBack} type="primary">Back</Button>
     </>
   );
 };
