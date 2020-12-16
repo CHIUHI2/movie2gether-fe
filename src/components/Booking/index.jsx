@@ -8,6 +8,11 @@ import { getOnShowMovie } from '../../api/movie/movie';
 import { getSessions } from '../../api/session/sessionApi';
 import './index.css';
 
+const PAGINATION_LOCALE = {
+  prevText: 'Prev',
+  nextText: 'Next',
+};
+
 const BookingPage = () => {
   const PAGE_CAPACITY = 10;
   const history = useHistory();
@@ -146,6 +151,7 @@ const BookingPage = () => {
               ))}
             </div>
             <Pagination
+              locale={PAGINATION_LOCALE}
               current={cinemaPage + 1}
               onChange={(page) => {
                 setCinemaPage(page - 1);
@@ -180,6 +186,7 @@ const BookingPage = () => {
               ))}
             </div>
             <Pagination
+              locale={PAGINATION_LOCALE}
               current={sessionPage + 1}
               onChange={(page) => {
                 setSessionPage(page - 1);
