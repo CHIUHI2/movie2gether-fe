@@ -2,83 +2,47 @@ import './index.css';
 import { Button, Form, Input } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Toast, SegmentedControl, WingBlank } from 'antd-mobile';
+import { SegmentedControl, WingBlank } from 'antd-mobile';
 import { useState } from 'react';
 import _ from 'lodash';
 import BookingDetails from '../BookingDetails';
 import { createBooking } from '../../../api/booking';
 import useProvideAuth from '../../../hooks/use-provide-auth';
+import {
+  validateCreditCardNumber,
+  validateCVC,
+  validateExpiryDate,
+  validateName,
+} from '../../../common/utils/payment-form-validator';
+import { VISA_TYPE_MATCH_REGEX, MASTER_TYPE_MATCH_REGEX } from '../../../common/constants/regex';
 
 const Payment = () => {
   const history = useHistory();
   const location = useLocation();
-  const [type, setType] = useState('Visa');
+  const [type, setType] = useState(-1);
   const [user] = useProvideAuth();
   const { id: userId } = user;
   const sessionId = _.get(location, 'state.sessionId', '');
   const seatNumber = _.get(location, 'state.seatNumber', '');
 
-  const checkCardNumber = (event) => {
-    const cardNumList = event.target.value.split('');
-    if (cardNumList.length > 16) {
-      Toast.info('Invalid card number !!!');
-    }
+  const onFinish = () => {
+    createBooking(userId, sessionId, seatNumber)
+      .then((response) => {
+        history.push('/paymentSuccess', { orderId: response.data.id });
+      })
+      .catch(() => {
+        history.push('/paymentFailed');
+      });
   };
 
-  const checkValidCVC = (event) => {
-    const cvcCode = event.target.value.split('');
-    if (cvcCode.length > 3) {
-      Toast.info('Invalid CVC code !!!');
-    }
-  };
-
-  const checkValidName = (event) => {
-    const name = event.target.value;
-    const input = /^[A-Za-z- ]+$/;
-    if (name !== '' && !input.test(name)) {
-      Toast.info('Invalid Name !!!');
-    }
-  };
-
-  const checkValidDate = (event) => {
-    const date = event.target.value;
-    const input = /^[A-Za-z-]+$/;
-    if (date !== '' && input.test(date)) {
-      Toast.info('Invalid date !!!');
-    }
-  };
-
-  const onFinish = (values) => {
-    const cardNumCheck = values.cardNum.split('');
-    const cvcCheck = values.cvc.split('');
-    let checking = false;
-    const inputType = type;
-    if (cardNumCheck.length === 16 && cvcCheck.length === 3) {
-      if (inputType.type === 'Master' && cardNumCheck[0] === '5') {
-        checking = true;
-      } else if ((inputType === 'Visa' || inputType.type === 'Visa') && cardNumCheck[0] === '4') {
-        checking = true;
-      }
-    }
-
-    if (checking) {
-      createBooking(userId, sessionId, seatNumber)
-        .then((response) => {
-          history.push('/paymentSuccess', { orderId: response.data.id });
-        })
-        .catch(() => {
-          history.push('/paymentFailed');
-        });
+  const updateCardType = (event) => {
+    if (VISA_TYPE_MATCH_REGEX.test(event.target.value)) {
+      setType(0);
+    } else if (MASTER_TYPE_MATCH_REGEX.test(event.target.value)) {
+      setType(1);
     } else {
-      history.push('/paymentFailed');
+      setType(-1);
     }
-  };
-
-  const onFinishFailed = () => {
-  };
-
-  const onValueChange = (value) => {
-    setType({ type: value });
   };
 
   return (
@@ -86,13 +50,13 @@ const Payment = () => {
       <div>
         <h1 className="payment">Payment</h1>
       </div>
-      <BookingDetails sessionId={sessionId} seatNumber={seatNumber}/>
+      <BookingDetails sessionId={sessionId} seatNumber={seatNumber} />
       <div>
         <h3>Payment Details</h3>
       </div>
       <WingBlank size="lg" className="sc-example">
         <p className="sub-title">Card Type</p>
-        <SegmentedControl values={['Visa', 'Master']} onValueChange={onValueChange} />
+        <SegmentedControl values={['Visa', 'Master']} selectedIndex={type} disabled />
       </WingBlank>
       <Form
         name="basic"
@@ -100,7 +64,6 @@ const Payment = () => {
           remember: true,
         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="Card number"
@@ -114,13 +77,15 @@ const Payment = () => {
               required: true,
               message: 'Please input valid card number!',
             },
+            validateCreditCardNumber,
           ]}
         >
           <Input
-            type="number"
+            type="text"
             name="cardNum"
-            onChange={checkCardNumber}
+            maxLength="16"
             placeholder="#### #### #### ####"
+            onChange={updateCardType}
           />
         </Form.Item>
         <Form.Item
@@ -135,13 +100,10 @@ const Payment = () => {
               required: true,
               message: 'Please input your Name!',
             },
+            validateName,
           ]}
         >
-          <Input
-            type="text"
-            onChange={checkValidName}
-            placeholder="please input your name here..."
-          />
+          <Input type="text" placeholder="please input your name here..." />
         </Form.Item>
         <Form.Item
           label="Expiry Date"
@@ -155,14 +117,10 @@ const Payment = () => {
               required: true,
               message: 'Please input valid expiry date!',
             },
+            validateExpiryDate,
           ]}
         >
-          <Input
-            type="text"
-            maxLength="7"
-            onChange={checkValidDate}
-            placeholder="please input expiry date as MM/YYYY"
-          />
+          <Input type="text" maxLength="7" placeholder="please input expiry date as MM/YYYY" />
         </Form.Item>
         <Form.Item
           label="CVC"
@@ -176,9 +134,10 @@ const Payment = () => {
               required: true,
               message: 'Please input valid CVC!',
             },
+            validateCVC,
           ]}
         >
-          <Input type="number" onChange={checkValidCVC} placeholder="Please input CVC as ###" />
+          <Input type="text" maxLength="3" placeholder="Please input CVC as ###" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="Pay for card" shape="round">
