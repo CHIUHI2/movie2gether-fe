@@ -7,6 +7,7 @@ import { getCinemas } from '../../api/cinema/cinema';
 import { getOnShowMovie } from '../../api/movie/movie';
 import { getSessions } from '../../api/session/sessionApi';
 import './index.css';
+import SeatingMap from './SeatMap';
 
 const PAGINATION_LOCALE = {
   prevText: 'Prev',
@@ -27,6 +28,7 @@ const BookingPage = () => {
   const [cinemaPageCount, setCinemaPageCount] = useState(0);
   const [sessions, setSessions] = useState([]);
   const [cinemas, setCinemas] = useState([]);
+  const [selectedSeatNumner, setSelectedSeatNumner] = useState(null);
 
   useEffect(() => {
     getOnShowMovie('onShow', { isRecommend: false }).then(({ data }) => {
@@ -66,7 +68,9 @@ const BookingPage = () => {
     }
   }
 
-  useEffect(() => {}, [selectedSessionIndex]);
+  useEffect(() => {
+    console.log(sessions[selectedSessionIndex]);
+  }, [selectedSessionIndex]);
 
   useEffect(() => {
     fetchSessions();
@@ -198,23 +202,33 @@ const BookingPage = () => {
           <div>No Sessions</div>
         )}
       </Card>
-      <Card>
-        {/* <SeatingPlan /> */}
-        <Button
-          onClick={() => {
-            const session = sessions[selectedSessionIndex];
-            history.push({
-              pathname: '/payment',
-              state: {
-                sessionId: session.id,
-                seat: 'A1',
-              },
-            });
-          }}
-        >
-          Book
-        </Button>
-      </Card>
+      {selectedSessionIndex !== null ? (
+        <Card>
+          <SeatingMap
+            seats={sessions[selectedSessionIndex].cinema.seats}
+            bookings={sessions[selectedSessionIndex].bookings}
+            onSelectSeat={(seatNumber) => {
+              setSelectedSeatNumner(seatNumber);
+            }}
+          />
+          <Button
+            onClick={() => {
+              const session = sessions[selectedSessionIndex];
+              history.push({
+                pathname: '/payment',
+                state: {
+                  sessionId: session.id,
+                  seat: selectedSeatNumner,
+                },
+              });
+            }}
+          >
+            Book
+          </Button>
+        </Card>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
