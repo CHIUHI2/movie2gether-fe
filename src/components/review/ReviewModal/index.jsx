@@ -9,7 +9,6 @@ const ReviewModal = ({ openModal, closeModal, movieTitle, movieId, userId }) => 
   const [comment, setComment] = useState(null);
   const [reviewId, setReviewId] = useState(null);
   
-
   useEffect(() => {
     getReview(movieId, userId).then((response) => {
       setRating(response.data.rating);

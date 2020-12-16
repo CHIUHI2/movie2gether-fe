@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { getBookingsWithPaginationByUserId } from '../../../api/userprofile';
 import ReviewModal from '../../review/ReviewModal';
+import useProvideAuth from '../../../hooks/use-provide-auth';
 import "./index.css";
 
 const { Item } = List;
 const { Brief } = Item;
+
 const UserProfilePage = () => {
   const [sessions, setSessions] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -14,6 +16,8 @@ const UserProfilePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [modalMovieId, setModalMovieId] = useState(null);
+  const [user] = useProvideAuth();
+  
 
   const showModal = (movieTitle, movieId) => {
     setModalMovieTitle(movieTitle);
@@ -31,7 +35,7 @@ const UserProfilePage = () => {
   };
 
   useEffect(() => {
-    getBookingsWithPaginationByUserId(0,5,"5fd81ac741ea7016828cfd39").then((response) => {
+    getBookingsWithPaginationByUserId(0,5,user.id).then((response) => {
       setTotalPages(response.data.totalPages);
       setSessions(response.data.content)
        })
@@ -40,7 +44,7 @@ const UserProfilePage = () => {
 
   const changePage = (pageNum) => {
     setCurrentPage(pageNum);
-    getBookingsWithPaginationByUserId(pageNum-1,5,"5fd81ac741ea7016828cfd39").then((response) => {
+    getBookingsWithPaginationByUserId(pageNum-1,5,user.id).then((response) => {
       setSessions(response.data.content)
        })
   }
@@ -69,7 +73,7 @@ const UserProfilePage = () => {
           closeModal={onClose}
           movieTitle={modalMovieTitle}
           movieId={modalMovieId}
-          userId="5fd81ac741ea7016828cfd39"
+          userId={user.id}
           />
         }
         {sessions.map((session) => (
@@ -91,10 +95,10 @@ const UserProfilePage = () => {
         <Flex justify="center">User Profile</Flex>
         <List renderHeader={() => 'User Information'} className="my-list">
           <Item>
-            User Name: <span>a</span>
+            User Name: <span>{user.userName}</span>
           </Item>
           <Item>
-            Email: <span>a</span>
+            Email: <span>{user.email}</span>
           </Item>
           <Item arrow="horizontal" multipleLine onClick={() => {}}>
             My Friend List{' '}
