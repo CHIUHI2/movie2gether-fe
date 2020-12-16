@@ -60,14 +60,6 @@ const Payment = () => {
         checking = true;
       }
     }
-    const date = values.date.split('/');
-    const month = new Date().getMonth();
-    const year = new Date().getFullYear();
-    const currentDate = new Date(year, month);
-    const inputDate = new Date(date[1], date[0] - 1);
-    if (inputDate < currentDate) {
-      alert('Invalid date!!');
-    }
 
     if (checking) {
       createBooking(userId, sessionId, seatNumber)
@@ -82,8 +74,7 @@ const Payment = () => {
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = () => {
   };
 
   const onValueChange = (value) => {
@@ -95,7 +86,7 @@ const Payment = () => {
       <div>
         <h1 className="payment">Payment</h1>
       </div>
-      <BookingDetails sessionId={sessionId} />
+      <BookingDetails sessionId={sessionId} seatNumber={seatNumber}/>
       <div>
         <h3>Payment Details</h3>
       </div>

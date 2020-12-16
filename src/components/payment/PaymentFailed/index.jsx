@@ -1,17 +1,26 @@
 import { Result, Button, Typography } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { CloseCircleOutlined } from '@ant-design/icons';
+import _ from 'lodash';
+
+const { Paragraph, Text } = Typography;
 
 const PaymentFailed = () => {
   const history = useHistory();
+  const location = useLocation();
+  const sessionId = _.get(location, 'state.sessionId', '');
+  const seatNumber = _.get(location, 'state.seatNumber', '');
 
   const handleBackToHome = () => {
     history.push('/');
   };
+
   const handlePurchaseAgain = () => {
-    history.push('/payment');
+    history.push('/payment', {
+      sessionId,
+      seatNumber,
+    });
   };
-  const { Paragraph, Text } = Typography;
 
   return (
     <Result
