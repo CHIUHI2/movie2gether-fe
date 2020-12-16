@@ -1,16 +1,16 @@
 import { Modal, WhiteSpace, WingBlank, TextareaItem } from 'antd-mobile';
 import { StarFilled } from '@ant-design/icons';
-import './index.css';
 import React, { useState, useEffect } from 'react';
 import { getReview, addReview, updateReview } from '../../../api/review';
+import './index.css';
 
-const ReviewModal = ({ openModal, closeModal, movieTitle, movieId, userId }) => {
+const ReviewModal = ({ openModal, closeModal, userId, movie }) => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
   const [reviewId, setReviewId] = useState(null);
   
   useEffect(() => {
-    getReview(movieId, userId).then((response) => {
+    getReview(movie.id, userId).then((response) => {
       setRating(response.data.rating);
       setComment(response.data.comment);
       setReviewId(response.data.id);
@@ -20,7 +20,7 @@ const ReviewModal = ({ openModal, closeModal, movieTitle, movieId, userId }) => 
   const onClose = () => {
     if (reviewId == null && rating != null && comment != null) {
       const review = {
-        movieId,
+        movieId: movie.id,
         userId,
         rating,
         comment,
@@ -32,7 +32,7 @@ const ReviewModal = ({ openModal, closeModal, movieTitle, movieId, userId }) => 
       });
     } else {
       const updatedReview = {
-        movieId,
+        movieId: movie.id,
         userId,
         rating,
         comment,
@@ -53,7 +53,7 @@ const ReviewModal = ({ openModal, closeModal, movieTitle, movieId, userId }) => 
         transparent
         maskClosable
         onClose={onClose}
-        title={movieTitle}
+        title={movie.title}
         footer={[
           {
             text: 'Save',
