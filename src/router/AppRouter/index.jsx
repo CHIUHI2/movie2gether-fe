@@ -11,21 +11,22 @@ import UserRegistrationPage from '../../components/user/UserRegistrationPage';
 import AppLayout from '../../layouts/AppLayout';
 import UserProfilePage from '../../components/userprofile/UserProfilePage';
 import BookingPage from '../../components/Booking';
+import ProtectedRoute from '../ProtectedRoute';
 
 const AppRouter = () => (
   <Router>
     <AppLayout>
       <Switch>
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/booking" component={BookingPage} />
-        <Route exact path="/payment" component={Payment} />
         <Route exact path="/user/register" component={UserRegistrationPage} />
-        <Route exact path="/paymentSuccess" component={PaymentSuccess} />
-        <Route exact path="/paymentFailed" component={PaymentFailed} />
-        <Route exact path="/test" />
-        <Route exact path="/movies/:id" component={MovieDetail} />
-        <Route exact path="/userprofile/" component={UserProfilePage} />
-        <Route exact path="/" component={MovieListingPage} />
+        <ProtectedRoute exact path="/booking" component={BookingPage} />
+        <ProtectedRoute exact path="/payment" component={Payment} />
+        <ProtectedRoute exact path="/paymentSuccess" component={PaymentSuccess} />
+        <ProtectedRoute exact path="/paymentFailed" component={PaymentFailed} />
+        <ProtectedRoute exact path="/test" />
+        <ProtectedRoute exact path="/movies/:id" component={MovieDetail} />
+        <ProtectedRoute exact path="/userprofile/" component={UserProfilePage} />
+        <ProtectedRoute exact path="/" component={MovieListingPage} />
         <Route path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
       </Switch>
