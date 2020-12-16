@@ -110,6 +110,7 @@ const BookingPage = () => {
             if (movie.posterUrl) {
               return (
                 <img
+                  key={movie.id}
                   alt={movie.posterUrl}
                   src={`http://image.tmdb.org/t/p/w500/${movie.posterUrl}`}
                   style={{ objectFit: 'cover', minHeight: '50vh' }}
