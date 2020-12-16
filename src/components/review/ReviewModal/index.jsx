@@ -18,7 +18,7 @@ const ReviewModal = ({ openModal, closeModal, movieTitle }) => {
   }, []);
 
   const onClose = () => {
-    if (reviewId == null) {
+    if (reviewId == null && rating != null && comment != null) {
       const review = {
         movieId: '5fd77c99e5f7d6417d7abac2',
         userId: '5fd81ac741ea7016828cfd39',
