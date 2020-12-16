@@ -1,4 +1,3 @@
-import 'antd/dist/antd.css';
 import { useState } from 'react';
 import { Button, Result } from 'antd';
 import { useHistory } from 'react-router-dom';

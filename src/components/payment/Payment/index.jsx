@@ -1,15 +1,16 @@
 import './index.css';
-import 'antd/dist/antd.css';
 import { Button, Form, Input } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Toast, SegmentedControl, WingBlank } from 'antd-mobile';
 import { useState } from 'react';
 import BookingDetails from '../BookingDetails';
 
 const Payment = () => {
-  const [type, setType] = useState('Visa');
   const history = useHistory();
+  const location = useLocation();
+  const [type, setType] = useState('Visa');
+
   const checkCardNumber = (event) => {
     const cardNumList = event.target.value.split('');
     if (cardNumList.length > 16) {
@@ -40,7 +41,7 @@ const Payment = () => {
     const cardNumCheck = values.cardNum.split('');
     const cvcCheck = values.cvc.split('');
     let checking = false;
-    const inputType=type;
+    const inputType = type;
     if (cardNumCheck.length === 16 && cvcCheck.length === 3) {
       if (inputType.type === 'Master' && cardNumCheck[0] === '5') {
         checking = true;
@@ -69,7 +70,7 @@ const Payment = () => {
     console.log(`selectedIndex:${e.nativeEvent.selectedSegmentIndex}`);
   };
   const onValueChange = (value) => {
-     console.log(value);
+    console.log(value);
     setType({ type: value });
   };
   return (
@@ -77,7 +78,7 @@ const Payment = () => {
       <div>
         <h1 className="payment">Payment</h1>
       </div>
-      <BookingDetails />
+      <BookingDetails sessionId={location.state.sessionId} />
       <div>
         <h3>Payment Details</h3>
       </div>

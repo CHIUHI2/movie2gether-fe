@@ -1,30 +1,55 @@
-import { Image } from 'antd';
-import icon from './icon.png';
 import './index.css';
+import { useEffect, useState } from 'react';
+import { Image } from 'antd';
+import dayjs from 'dayjs';
+import icon from './icon.png';
+import { getSessionById } from '../../../api/paymentDetails';
 
-const BookingDetails = () => (
-  <div>
+const BookingDetails = ({ sessionId }) => {
+  const [bookingDetails, setBookingDetails] = useState(null);
+
+  useEffect(() => {
+    if (sessionId) {
+      getSessionById(sessionId).then((response) => {
+        setBookingDetails(response.data);
+      });
+    }
+  }, [sessionId]);
+
+  const getSessionDateInYYYYMMDDFormat = (datetime) => {
+    return dayjs(datetime).format('YYYY-MM-DD');
+  };
+
+  const getMovieTimeInHHmmFormat = (datetime) => {
+    return dayjs(datetime).format('HH:mm');
+  };
+
+  return (
     <div>
-      <h3>
-        <u>Booking Details </u>
-        <Image className="image"
-      width={100}
-      src={icon}
-    />
-      </h3>
-      <p>
-        <b>Movie: </b>
-      </p>
-      <p>
-        <b>Cinema:</b>
-      </p>
-      <p>
-        <b>Date:</b>
-      </p>
-      <p>
-        <b>Time:</b>
-      </p>
+      <div>
+        <h3>
+          <u>Booking Details </u>
+          <Image className="image" width={100} src={icon} />
+        </h3>
+        {bookingDetails && (
+          <>
+            <p>
+              <b>Movie:</b> {bookingDetails.movie.title}
+            </p>
+            <p>
+              <b>Cinema:</b> {bookingDetails.cinema.name}
+            </p>
+            <p>
+              <b>Date:</b> {getSessionDateInYYYYMMDDFormat(bookingDetails.startTime)}
+            </p>
+            <p>
+              <b>Time:</b> {getMovieTimeInHHmmFormat(bookingDetails.startTime)} -{' '}
+              {getMovieTimeInHHmmFormat(bookingDetails.endTime)}
+            </p>
+          </>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 export default BookingDetails;
