@@ -1,5 +1,6 @@
 import { Button, Card, Carousel, List, Pagination, Picker } from 'antd-mobile';
 import dayjs from 'dayjs';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getCinemas } from '../../api/cinema/cinema';
@@ -13,7 +14,8 @@ const BookingPage = () => {
 
   const [movies, setMovies] = useState([]);
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(-1);
-  const [selectedSession, setSelectedSession] = useState(null);
+  const [selectedSessionIndex, setSelectedSessionIndex] = useState(null);
+  const [selectedCinemaIndex, setSelectecCinemaIndex] = useState(null);
   const [sessionPage, setSessionPage] = useState(0);
   const [sessionPageCount, setSessionPageCount] = useState(0);
   const [cinemaPage, setCinemaPage] = useState(0);
@@ -44,24 +46,34 @@ const BookingPage = () => {
 
   function fetchSessions() {
     if (movies.length > 0)
-      getSessions(sessionPage, PAGE_CAPACITY, movies[selectedMovieIndex].id).then(
-        ({ content, totalPages }) => {
-          setSessions(content);
-          setSessionPageCount(totalPages);
-        },
-      );
+      getSessions(
+        sessionPage,
+        PAGE_CAPACITY,
+        movies[selectedMovieIndex].id,
+        selectedCinemaIndex !== null ? cinemas[selectedCinemaIndex].id : null,
+      ).then(({ content, totalPages }) => {
+        setSessions(content);
+        setSessionPageCount(totalPages);
+      });
     else {
       setCinemas([]);
       setCinemaPageCount(0);
     }
   }
 
+  useEffect(() => {}, [selectedSessionIndex]);
+
+  useEffect(() => {
+    fetchSessions();
+    setSelectedSessionIndex(null);
+  }, [selectedCinemaIndex]);
+
   useEffect(() => {
     setCinemas([]);
     fetchCinemas();
     setSessions([]);
     fetchSessions();
-    setSelectedSession(null);
+    setSelectedSessionIndex(null);
   }, [selectedMovieIndex]);
 
   useEffect(() => {
@@ -72,7 +84,7 @@ const BookingPage = () => {
     fetchCinemas();
   }, [cinemaPage]);
 
-  useEffect(() => {}, [selectedSession]);
+  useEffect(() => {}, [selectedSessionIndex]);
 
   return (
     <div style={{ height: '100%', flexGrow: 1 }}>
@@ -119,8 +131,19 @@ const BookingPage = () => {
         {cinemas.length > 0 ? (
           <div>
             <div id="cinema-table" className="booking-table">
-              {cinemas.map((cinema) => (
-                <Button key={cinema.id}>{cinema.name}</Button>
+              {cinemas.map((cinema, index) => (
+                <div
+                  key={cinema.id}
+                  className={classNames({
+                    'cinema-item': true,
+                    selected: index === selectedCinemaIndex,
+                  })}
+                  onClick={() => {
+                    setSelectecCinemaIndex(index !== selectedCinemaIndex ? index : null);
+                  }}
+                >
+                  <div>{cinema.name}</div>
+                </div>
               ))}
             </div>
             <Pagination
@@ -140,23 +163,20 @@ const BookingPage = () => {
         {sessions.length > 0 ? (
           <div>
             <div id="session-table" className="booking-table" cla>
-              {sessions.map((session) => (
-                <div key={session.id}>
-                  <div>{dayjs(session.startTime).format('HH:mm')}</div>
-                  <div>{dayjs(session.endTime).format('HH:mm')}</div>
-                  <Button
-                    onClick={() => {
-                      history.push({
-                        pathname: '/payment',
-                        state: {
-                          sessionId: session.id,
-                          seat: 'A1',
-                        },
-                      });
-                    }}
-                  >
-                    Book
-                  </Button>
+              {sessions.map((session, index) => (
+                <div
+                  key={session.id}
+                  className={classNames({
+                    'session-item': true,
+                    selected: index === selectedSessionIndex,
+                  })}
+                  onClick={() => {
+                    setSelectedSessionIndex(index !== selectedSessionIndex ? index : null);
+                  }}
+                >
+                  <div>{`${dayjs(session.startTime).format('HH:mm')} - ${dayjs(
+                    session.endTime,
+                  ).format('HH:mm')}`}</div>
                 </div>
               ))}
             </div>
@@ -171,6 +191,23 @@ const BookingPage = () => {
         ) : (
           <div>No Sessions</div>
         )}
+      </Card>
+      <Card>
+        {/* <SeatingPlan /> */}
+        <Button
+          onClick={() => {
+            const session = sessions[selectedSessionIndex];
+            history.push({
+              pathname: '/payment',
+              state: {
+                sessionId: session.id,
+                seat: 'A1',
+              },
+            });
+          }}
+        >
+          Book
+        </Button>
       </Card>
     </div>
   );
