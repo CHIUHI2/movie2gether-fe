@@ -13,8 +13,8 @@ import UserProfilePage from '../../components/userprofile/UserProfilePage';
 import BookingPage from '../../components/Booking';
 
 const AppRouter = () => (
-  <AppLayout>
-    <Router>
+  <Router>
+    <AppLayout>
       <Switch>
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/booking" component={BookingPage} />
@@ -29,8 +29,8 @@ const AppRouter = () => (
         <Route path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
       </Switch>
-    </Router>
-  </AppLayout>
+    </AppLayout>
+  </Router>
 );
 
 export default AppRouter;

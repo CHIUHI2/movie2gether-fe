@@ -5,7 +5,7 @@ import useProvideAuth from '../../hooks/use-provide-auth';
 const ProtectedRoute = ({ component, exact, path }) => {
   const [, isLoggedIn] = useProvideAuth();
 
-  if (isLoggedIn()) {
+  if (isLoggedIn) {
     return <Route exact={exact} path={path} component={component} />;
   }
 
