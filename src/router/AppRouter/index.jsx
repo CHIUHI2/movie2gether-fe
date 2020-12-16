@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import NotFoundPage from '../../components/exception/NotFoundPage';
-// import LoginPage from '../../components/user/LoginPage';
+import MovieListingPage from '../../components/movie/MovieListingPage';
+import MovieDetail from '../../components/movie/MovieDetail';
+import LoginPage from '../../components/user/LoginPage';
 import UserRegistrationPage from '../../components/user/UserRegistrationPage';
 import AppLayout from '../../layouts/AppLayout';
-import ProtectedRoute from '../ProtectedRoute';
 import UserProfilePage from '../../components/userprofile/UserProfilePage';
 
 const AppRouter = () => (
@@ -14,7 +15,9 @@ const AppRouter = () => (
         <Route exact path="/login" component={UserProfilePage} />
         <Route exact path="/user/register" component={UserRegistrationPage} />
         <Route exact path="/test" />
-        <ProtectedRoute exact path="/" />
+        <Route exact path="/movies/:id" component={MovieDetail} />
+        <Route exact path="/" component={MovieListingPage} />
+        <Route path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </Router>
