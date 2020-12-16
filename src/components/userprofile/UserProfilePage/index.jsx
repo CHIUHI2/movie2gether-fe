@@ -1,6 +1,6 @@
 import { Flex, Button,List,Pagination} from 'antd-mobile';
 import React, { useEffect, useState} from 'react';
-import { getUser, getSessionBySessionId } from "../../../api/userprofile";
+import {  getBookingsWithPaginationByUserId } from "../../../api/userprofile";
 import ReviewModal from "../../review/ReviewModal";
 import { getReview } from "../../../api/review";
 // addReview
@@ -8,7 +8,7 @@ import { getReview } from "../../../api/review";
 const {Item} = List;
 const {Brief} = Item;
 const UserProfilePage = () => {
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [sessions,setSessions] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [rating, setRating] = useState(null);
@@ -30,19 +30,28 @@ const UserProfilePage = () => {
     nextText: 'Next',
   };
 
-  useEffect(() => {
-    getUser('1').then((response) => {
-      setUser(response.data);
-    })
+  // useEffect(() => {
+  //   getUser('5fd81ac741ea7016828cfd391').then((response) => {
+  //     setUser(response.data);
+  //   })
+  // }, [])
+
+    useEffect(() => {
+      getBookingsWithPaginationByUserId(0,5,"5fd81ac741ea7016828cfd39").then((response) => {
+              console.log(response.data)
+              setSessions(response.data)
+              })
+            
   }, [])
 
-  useEffect(() => {
-    if(user.id){
-     getSessionBySessionId(user.id).then((response) => {
-          setSessions(response.data)
-        })
-      }
-  }, [user.id])
+  // useEffect(() => {
+  //   if(user.id){
+  //     getBookingsWithPaginationByUserId(0,5,"5fd81ac741ea7016828cfd39").then((response) => {
+  //       console.log(response.data)
+  //       setSessions(response.data)
+  //       })
+  //     }
+  // }, [user.id])
 
   const GenerateListItem = () => {
     return (
@@ -74,8 +83,8 @@ const UserProfilePage = () => {
        <div>
        <Flex justify="center">User Profile</Flex>
        <List renderHeader={() => 'User Information'} className="my-list">
-        <Item>User Name: <span>{user.userName}</span></Item>
-        <Item>Email: <span>{user.email}</span></Item>
+        <Item>User Name: <span>a</span></Item>
+        <Item>Email: <span>a</span></Item>
         <Item arrow="horizontal" multipleLine onClick={() => {}}>My Friend List </Item>
       </List>
       <List renderHeader={() => 'Movie History'} className="my-list">
