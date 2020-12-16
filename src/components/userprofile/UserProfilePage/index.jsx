@@ -51,6 +51,7 @@ const UserProfilePage = () => {
 
   const DisplayNoBookingHistory = () => {
     if (sessions.length <=0){
+      setTotalPages(1)
       return (
         <div className="no-booking-history">You have not booked any movie yet</div>
         )
