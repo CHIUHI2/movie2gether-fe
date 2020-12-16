@@ -6,7 +6,7 @@ const useProvideAuth = () => {
   const signIn = (userResponse) => {
     const { accessToken, userName, id, email } = userResponse;
     setToken(accessToken);
-    window.localStorage.setItem('backapin_access_token', token);
+    window.localStorage.setItem('backapin_access_token', accessToken);
     const user = {
       id,
       userName,
