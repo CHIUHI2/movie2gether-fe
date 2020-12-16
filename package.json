@@ -19,6 +19,7 @@
     "axios": "^0.21.0",
     "classnames": "^2.2.6",
     "dayjs": "^1.9.7",
+    "lodash": "^4.17.20",
     "rc-form": "^2.4.11",
     "react": "^17.0.1",
     "react-cookie": "^4.0.3",
