@@ -23,15 +23,15 @@ const Payment = () => {
   const [user] = useProvideAuth();
   const { id: userId } = user;
   const sessionId = _.get(location, 'state.sessionId', '');
-  const seatNumber = _.get(location, 'state.seatNumber', '');
+  const seatNumbers = _.get(location, 'state.seatNumber', '');
 
   const onFinish = () => {
-    createBooking(userId, sessionId, seatNumber)
+    createBooking(userId, sessionId, seatNumbers)
       .then((response) => {
         history.push('/paymentSuccess', { orderId: response.data.id });
       })
       .catch(() => {
-        history.push('/paymentFailed', { sessionId, seatNumber });
+        history.push('/paymentFailed', { sessionId, seatNumber: seatNumbers });
       });
   };
 
@@ -50,7 +50,7 @@ const Payment = () => {
       <div>
         <h1 className="payment">Payment</h1>
       </div>
-      <BookingDetails sessionId={sessionId} seatNumber={seatNumber} />
+      <BookingDetails sessionId={sessionId} seatNumber={seatNumbers} />
       <div>
         <h3>Payment Details</h3>
       </div>
