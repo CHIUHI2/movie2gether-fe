@@ -2,7 +2,6 @@ import './index.css';
 import { useState, useEffect } from 'react';
 import { Grid } from 'antd-mobile';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import MovieListingFunctionModal from '../MovieListingFunctionModal';
 import { getMoviesByMode, getMoviesByModeAndGenre } from '../../../api/movie';
 
@@ -51,7 +50,7 @@ const MovieListingGroup = ({ tab }) => {
         <MovieListingFunctionModal applyFilterHandler={updateMoviesByModeAndGenre} />
       </div>
       <Grid
-        key={uuidv4()}
+        key={movies.length}
         data={movies}
         columnNum={3}
         square={false}
