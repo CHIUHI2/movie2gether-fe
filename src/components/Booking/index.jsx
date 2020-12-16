@@ -215,7 +215,6 @@ const BookingPage = () => {
             seats={sessions[selectedSessionIndex].cinema.seats}
             bookings={sessions[selectedSessionIndex].bookings}
             onSelectSeatNumbers={(seatNumbers) => {
-              console.log(seatNumbers);
               setSelectedSeatNumners(seatNumbers);
             }}
           />
