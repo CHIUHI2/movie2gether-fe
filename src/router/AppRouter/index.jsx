@@ -9,6 +9,7 @@ import MovieDetail from '../../components/movie/MovieDetail';
 import LoginPage from '../../components/user/LoginPage';
 import UserRegistrationPage from '../../components/user/UserRegistrationPage';
 import AppLayout from '../../layouts/AppLayout';
+import UserProfilePage from '../../components/userprofile/UserProfilePage';
 
 const AppRouter = () => (
   <AppLayout>
@@ -21,6 +22,7 @@ const AppRouter = () => (
         <Route exact path="/paymentFailed" component={PaymentFailed} />
         <Route exact path="/test" />
         <Route exact path="/movies/:id" component={MovieDetail} />
+        <Route exact path="/userprofile/" component={UserProfilePage} />
         <Route exact path="/" component={MovieListingPage} />
         <Route path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
