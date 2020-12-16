@@ -24,8 +24,11 @@
   font-size: 18px;
   min-height: 50px;
 }
+.session-item > div:first-child {
+  flex-grow: 1;
+}
 
-.cinema-item > div {
+.cinema-item {
   display: flex;
   flex: auto;
   justify-content: center;
@@ -34,12 +37,12 @@
   min-height: 50px;
 }
 
-.cinema-item.selected > div {
+.cinema-item.selected {
   border: 1px solid;
   border-radius: 10px;
 }
 
-.session-item.selected > div {
+.session-item.selected {
   border: 1px solid;
   border-radius: 10px;
 }
