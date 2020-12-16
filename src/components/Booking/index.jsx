@@ -69,6 +69,10 @@ const BookingPage = () => {
   }
 
   useEffect(() => {
+    setSelectedSeatNumner(null);
+  }, [sessions, selectedSessionIndex]);
+
+  useEffect(() => {
     fetchSessions();
     setSelectedSessionIndex(null);
   }, [selectedCinemaIndex]);
@@ -208,7 +212,9 @@ const BookingPage = () => {
             }}
           />
           <Button
+            disabled={selectedSeatNumner === null}
             onClick={() => {
+              if (selectedSeatNumner === null) return;
               const session = sessions[selectedSessionIndex];
               history.push({
                 pathname: '/payment',
