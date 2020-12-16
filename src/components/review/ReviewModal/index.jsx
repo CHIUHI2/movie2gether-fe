@@ -51,7 +51,7 @@ const ReviewModal = ({ openModal, closeModal, movieTitle }) => {
       <Modal
         visible={openModal}
         transparent
-        maskClosable={false}
+        maskClosable
         onClose={onClose}
         title={movieTitle}
         footer={[
