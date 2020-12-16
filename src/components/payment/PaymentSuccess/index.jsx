@@ -7,9 +7,18 @@ const PaymentSuccess = () => {
   const location = useLocation();
   const history = useHistory();
   const orderId = _.get(location, 'state.orderId', '');
+  const sessionId = _.get(location, 'state.sessionId', '');
+  const seatNumber = _.get(location, 'state.seatNumber', '');
 
   const handleBackToHome = () => {
     history.push('/');
+  };
+
+  const handlePurchaseAgain = () => {
+    history.push('/payment', {
+      sessionId,
+      seatNumber,
+    });
   };
 
   return (
@@ -20,7 +29,7 @@ const PaymentSuccess = () => {
         <Button className="button" type="primary" key="console" onClick={handleBackToHome}>
           Back to Home
         </Button>
-        <Button className="button" type="primary" key="buy">
+        <Button className="button" type="primary" key="buy" onClick={handlePurchaseAgain}>
           Purchase Again
         </Button>
       </div>
