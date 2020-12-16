@@ -32,7 +32,7 @@ const UserProfilePage = () => {
   };
 
   const moveBack = () => {
-    history.push('/')
+    history.goBack()
   };
 
   const locale = {
