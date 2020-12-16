@@ -150,7 +150,7 @@ const BookingPage = () => {
                     selected: index === selectedCinemaIndex,
                   })}
                   onClick={() => {
-                    setSelectecCinemaIndex(index !== selectedCinemaIndex ? index : null);
+                    setSelectecCinemaIndex(index);
                   }}
                 >
                   <div>{cinema.name}</div>
@@ -170,41 +170,47 @@ const BookingPage = () => {
           <div>No Cinemas</div>
         )}
       </Card>
-
-      <Card>
-        {sessions.length > 0 ? (
-          <div>
-            <div id="session-table" className="booking-table" cla>
-              {sessions.map((session, index) => (
-                <div
-                  key={session.id}
-                  className={classNames({
-                    'session-item': true,
-                    selected: index === selectedSessionIndex,
-                  })}
-                  onClick={() => {
-                    setSelectedSessionIndex(index !== selectedSessionIndex ? index : null);
-                  }}
-                >
-                  <div>{`${dayjs(session.startTime).format('HH:mm')} - ${dayjs(
-                    session.endTime,
-                  ).format('HH:mm')}`}</div>
-                </div>
-              ))}
+      {selectedCinemaIndex !== null ? (
+        <Card>
+          {sessions.length > 0 ? (
+            <div>
+              <div id="session-table" className="booking-table" cla>
+                {sessions.map((session, index) => (
+                  <div
+                    key={session.id}
+                    className={classNames({
+                      'session-item': true,
+                      selected: index === selectedSessionIndex,
+                    })}
+                    onClick={() => {
+                      setSelectedSessionIndex(index);
+                    }}
+                  >
+                    <div>
+                      <div>{`${dayjs(session.startTime).format('ddd, MMMM D')}`}</div>
+                      <div>{`${dayjs(session.startTime).format('HH:mm')} - ${dayjs(
+                        session.endTime,
+                      ).format('HH:mm')}`}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Pagination
+                locale={PAGINATION_LOCALE}
+                current={sessionPage + 1}
+                onChange={(page) => {
+                  setSessionPage(page - 1);
+                }}
+                total={sessionPageCount}
+              />
             </div>
-            <Pagination
-              locale={PAGINATION_LOCALE}
-              current={sessionPage + 1}
-              onChange={(page) => {
-                setSessionPage(page - 1);
-              }}
-              total={sessionPageCount}
-            />
-          </div>
-        ) : (
-          <div>No Sessions</div>
-        )}
-      </Card>
+          ) : (
+            <div>No Sessions</div>
+          )}
+        </Card>
+      ) : (
+        ''
+      )}
       {selectedSessionIndex !== null ? (
         <Card>
           <SeatingMap

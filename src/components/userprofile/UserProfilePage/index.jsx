@@ -1,6 +1,7 @@
 import { Flex, Button, List, Pagination } from 'antd-mobile';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import dayjs from 'dayjs';
+import { useHistory } from 'react-router-dom';
 import { getBookingsWithPaginationByUserId } from '../../../api/userprofile';
 import ReviewModal from '../../review/ReviewModal';
 import useProvideAuth from '../../../hooks/use-provide-auth';
@@ -17,6 +18,7 @@ const UserProfilePage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [modalMovieId, setModalMovieId] = useState(null);
   const [user] = useProvideAuth();
+  const history = useHistory();
   
 
   const showModal = (movieTitle, movieId) => {
@@ -27,6 +29,10 @@ const UserProfilePage = () => {
 
   const onClose = () => {
     setOpenModal(false);
+  };
+
+  const moveBack = () => {
+    history.push("/");
   };
 
   const locale = {
@@ -65,7 +71,6 @@ const UserProfilePage = () => {
 
   const GenerateListItem = () => {
     return (
-      
       <div>
         {
           openModal && 
@@ -110,7 +115,7 @@ const UserProfilePage = () => {
         </List>
       </div>
       <PaginationItem />
-      <Button>Back</Button>
+      <Button onClick={moveBack}>Back</Button>
     </>
   );
 };

@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: row;
 }
-.session-item div {
+.session-item > div {
   display: flex;
   flex: auto;
   justify-content: center;
@@ -25,7 +25,7 @@
   min-height: 50px;
 }
 
-.cinema-item div {
+.cinema-item > div {
   display: flex;
   flex: auto;
   justify-content: center;
@@ -33,20 +33,15 @@
   font-size: 18px;
   min-height: 50px;
 }
-.cinema-item.selected div {
+
+.cinema-item.selected > div {
   border: 1px solid;
   border-radius: 10px;
 }
 
-.session-item.selected div {
-  display: flex;
+.session-item.selected > div {
   border: 1px solid;
   border-radius: 10px;
-  flex: auto;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  min-height: 50px;
 }
 
 .session-item .am-button {
