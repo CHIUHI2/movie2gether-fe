@@ -31,7 +31,7 @@ const Payment = () => {
         history.push('/paymentSuccess', { orderId: response.data.id });
       })
       .catch(() => {
-        history.push('/paymentFailed');
+        history.push('/paymentFailed', { sessionId, seatNumber });
       });
   };
 
