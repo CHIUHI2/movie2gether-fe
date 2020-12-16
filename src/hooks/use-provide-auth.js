@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import authContext from '../contexts/auth-context';
 
 const useProvideAuth = () => {
-  const [user, setUser] = useState({});
+  const auth = useContext(authContext);
 
-  useEffect(() => {
-    setUser({ name: 'test' });
-  }, []);
-
-  const signIn = () => true;
-
-  const signOut = () => {
-    setUser({});
+  const signIn = (userResponse) => {
+    const { accessToken, userName, id, email } = userResponse;
+    window.localStorage.setItem('backapin_access_token', accessToken);
+    auth.user = {
+      id,
+      userName,
+      email,
+    };
   };
 
-  const isLoggedIn = () => true;
+  const isLoggedIn = () => {
+    return window.localStorage.getItem('backapin_access_token');
+  };
 
-  return [user, isLoggedIn, signIn, signOut];
+  return [auth.user, isLoggedIn, signIn];
 };
 
 export default useProvideAuth;

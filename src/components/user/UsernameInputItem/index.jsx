@@ -7,26 +7,26 @@ const UsernameInputItem = ({ form }) => {
     if (value && value.length >= 8) {
       callback();
     } else {
-      callback({ message: 'Please input at least 8 characters for username', field: 'username' });
+      callback({ message: 'Please input at least 8 characters for username', field: 'userName' });
     }
   };
 
   const showValidationErrorToast = () => {
     Toast.hide();
-    const errorMessages = getFieldError('username');
+    const errorMessages = getFieldError('userName');
     const content = errorMessages.join(', ');
     Toast.info(content);
   };
 
   return (
     <InputItem
-      {...getFieldProps('username', {
+      {...getFieldProps('userName', {
         rules: [
           { required: true, message: 'Please input username' },
           { validator: validateUsername },
         ],
       })}
-      error={!!getFieldError('username')}
+      error={!!getFieldError('userName')}
       onErrorClick={showValidationErrorToast}
       type="text"
       clear
