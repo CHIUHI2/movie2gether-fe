@@ -3,5 +3,6 @@ module.exports = {
 
   rules: {
     'react/react-in-jsx-scope': 0,
+    'prefer-promise-reject-errors': 0,
   },
 };
