@@ -25,7 +25,6 @@ const MovieListingGroup = ({ tab }) => {
   }, [tab]);
 
   const updateMoviesByModeAndGenre = (filterGenre) => {
-    console.log(filterGenre)
     if(filterGenre === "all") {
       getMoviesByMode(tab).then((response) => {
         const gridData = responseToGridData(response.data);
