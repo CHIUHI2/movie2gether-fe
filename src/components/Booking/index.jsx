@@ -69,11 +69,10 @@ const BookingPage = () => {
   }, [selectedCinemaIndex]);
 
   useEffect(() => {
-    setCinemas([]);
     fetchCinemas();
-    setSessions([]);
     fetchSessions();
     setSelectedSessionIndex(null);
+    setSelectecCinemaIndex(null);
   }, [selectedMovieIndex]);
 
   useEffect(() => {
