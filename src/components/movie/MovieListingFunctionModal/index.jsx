@@ -21,7 +21,7 @@ function closest(el, selector) {
 
 const MovieListingFunctionModal = ({ applyFilterHandler }) => {
   const [visible, setVisible] = useState(false);
-  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [selectedGenre, setSelectedGenre] = useState("all");
 
   const onWrapTouchStart = (el) => {
     // fix touch to scroll background page on iOS
@@ -47,7 +47,7 @@ const MovieListingFunctionModal = ({ applyFilterHandler }) => {
   };
 
   const onClickFilter = (filter) => {
-    setSelectedGenre(filter);
+    setSelectedGenre(selectedGenre === filter ? null : filter);
   };
 
   return (

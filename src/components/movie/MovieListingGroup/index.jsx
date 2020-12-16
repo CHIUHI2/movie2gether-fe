@@ -26,10 +26,18 @@ const MovieListingGroup = ({ tab }) => {
   }, [tab]);
 
   const updateMoviesByModeAndGenre = (filterGenre) => {
-    getMoviesByModeAndGenre(tab, filterGenre).then((response) => {
-      const gridData = responseToGridData(response.data);
-      setMovies(gridData);
-    });
+    if(filterGenre === "all") {
+      getMoviesByMode(tab).then((response) => {
+        const gridData = responseToGridData(response.data);
+        setMovies(gridData);
+      });
+    }
+    else {
+      getMoviesByModeAndGenre(tab, filterGenre).then((response) => {
+        const gridData = responseToGridData(response.data);
+        setMovies(gridData);
+      });
+    }
   };
 
   const moveToDetail = (item) => {
