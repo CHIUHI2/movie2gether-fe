@@ -65,22 +65,26 @@ const Payment = () => {
     const year = new Date().getFullYear();
     const currentDate = new Date(year, month);
     const inputDate = new Date(date[1], date[0] - 1);
+    let dateChecking = true;
     if (inputDate < currentDate) {
-      alert('Invalid date!!');
-    }
+      dateChecking = false;
+      Toast.info('Invalid date!!');
 
-    if (checking) {
-      createBooking(userId, sessionId, seatNumber)
-        .then((response) => {
-          history.push('/paymentSuccess', { orderId: response.data.id });
-        })
-        .catch(() => {
-          history.push('/paymentFailed');
-        });
-    } else {
-      history.push('/paymentFailed');
     }
-  };
+    if(dateChecking){
+      if (checking) {
+        createBooking(userId, sessionId, seatNumber)
+          .then((response) => {
+            history.push('/paymentSuccess', { orderId: response.data.id });
+          })
+          .catch(() => {
+            history.push('/paymentFailed');
+          });
+      } else {
+        history.push('/paymentFailed');
+        }
+      };
+    }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
