@@ -9,6 +9,7 @@ import MovieRatings from '../MovieRatings';
 import MovieOverview from '../MovieOverview';
 import BookingButton from '../BookingButton';
 import FriendsAlsoBooked from '../FriendsAlsoBooked';
+import MovieReviewList from '../MovieReviewList';
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -38,9 +39,10 @@ const MovieDetail = () => {
           <Flex justify="between">
             <div>
               <h2>{movieDetail.title}</h2>
-              <FriendsAlsoBooked friends={['User']} />
+              <FriendsAlsoBooked friends={movieDetail.friends} />
             </div>
-            <BookingButton movieId={movieDetail.id} />
+            <h2>{movieDetail.title}</h2>
+            {movieDetail.onShow && <BookingButton movieId={movieDetail.id} />}
           </Flex>
           <div>{getFormattedReleaseDate(movieDetail.releaseDate)}</div>
           <WhiteSpace size="sm" />
@@ -49,6 +51,9 @@ const MovieDetail = () => {
           <MovieRatings rating={movieDetail.voteAverage} />
           <WhiteSpace size="lg" />
           <MovieOverview overview={movieDetail.overview} />
+          <WhiteSpace size="lg" />
+          <MovieReviewList movieId={movieDetail.id} />
+          <WhiteSpace size="lg" />
         </WingBlank>
       )}
     </>

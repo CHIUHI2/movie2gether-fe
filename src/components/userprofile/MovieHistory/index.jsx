@@ -1,5 +1,5 @@
 import { List } from 'antd-mobile';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import ReviewModal from '../../review/ReviewModal';
 
@@ -9,9 +9,10 @@ const { Brief } = Item;
 const MovieHistory = ({userId, sessions}) => {
     const [openModal, setOpenModal] = useState(false);
     const [modalMovie, setmodalMovie] = useState(null);
-    
-    const showModal = (movie) => {
+    const [modalSessionId, setModalSessionId] = useState(null);
+    const showModal = (movie, sessionId) => {
         setmodalMovie(movie);
+        setModalSessionId(sessionId);
         setOpenModal(true);
       };
     
@@ -23,7 +24,8 @@ const MovieHistory = ({userId, sessions}) => {
         return dayjs(dateTime).format('YYYY-MM-DD');
     };
 
-    return(
+    const GenerateHistory = () => {
+        return (
         <List renderHeader={() => 'Movie History'} className="my-list">
          {
           openModal && 
@@ -32,14 +34,24 @@ const MovieHistory = ({userId, sessions}) => {
           closeModal={onClose}
           movie={modalMovie}
           userId={userId}
+          sessionId={modalSessionId}
           />
         }
         {sessions.map((session) => (
-          <Item key={session.sessionDetail.id} multipleLine arrow="horizontal" onClick={() => showModal(session.sessionDetail.movie)}>
+          <Item key={session.id} multipleLine arrow="horizontal" onClick={() => showModal(session.sessionDetail.movie, session.sessionDetail.id)}>
             {session.sessionDetail.movie.title} <Brief> {getFormattedReleaseDate(session.sessionDetail.endTime)}</Brief>
           </Item>
         ))}
         </List>
+        )
+    }
+  
+    useEffect(() => {
+      GenerateHistory();
+    }, [])
+
+    return(
+        <GenerateHistory />
     )
 }
 

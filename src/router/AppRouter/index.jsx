@@ -12,6 +12,7 @@ import AppLayout from '../../layouts/AppLayout';
 import UserProfilePage from '../../components/userprofile/UserProfilePage';
 import BookingPage from '../../components/Booking';
 import ProtectedRoute from '../ProtectedRoute';
+import FriendsListPage from '../../components/userprofile/FriendsListPage';
 
 const AppRouter = () => (
   <Router>
@@ -27,6 +28,7 @@ const AppRouter = () => (
         <ProtectedRoute exact path="/test" />
         <ProtectedRoute exact path="/movies/:id" component={MovieDetail} />
         <ProtectedRoute exact path="/userprofile/" component={UserProfilePage} />
+        <ProtectedRoute exact path="/friends" component={FriendsListPage} />
         <ProtectedRoute exact path="/" component={MovieListingPage} />
         <Route path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
