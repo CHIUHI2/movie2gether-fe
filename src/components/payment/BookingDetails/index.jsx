@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import icon from './icon.png';
 import { getSessionById } from '../../../api/paymentDetails';
 
-const BookingDetails = ({ sessionId }) => {
+const BookingDetails = ({ sessionId, seatNumber }) => {
   const [bookingDetails, setBookingDetails] = useState(null);
 
   useEffect(() => {
@@ -23,7 +23,6 @@ const BookingDetails = ({ sessionId }) => {
   const getMovieTimeInHHmmFormat = (datetime) => {
     return dayjs(datetime).format('HH:mm');
   };
-
   return (
     <div>
       <div>
@@ -45,6 +44,9 @@ const BookingDetails = ({ sessionId }) => {
             <p>
               <b>Time:</b> {getMovieTimeInHHmmFormat(bookingDetails.startTime)} -{' '}
               {getMovieTimeInHHmmFormat(bookingDetails.endTime)}
+            </p>
+            <p>
+              <b>Seat(s):</b> {seatNumber.sort().join(', ')}
             </p>
           </>
         )}

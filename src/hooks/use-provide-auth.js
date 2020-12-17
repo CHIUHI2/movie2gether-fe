@@ -1,6 +1,11 @@
+import { useState } from 'react';
+
 const useProvideAuth = () => {
+  const [token, setToken] = useState(window.localStorage.getItem('backapin_access_token'));
+
   const signIn = (userResponse) => {
     const { accessToken, userName, id, email } = userResponse;
+    setToken(accessToken);
     window.localStorage.setItem('backapin_access_token', accessToken);
     const user = {
       id,
@@ -11,7 +16,7 @@ const useProvideAuth = () => {
   };
 
   const isLoggedIn = () => {
-    return window.localStorage.getItem('backapin_access_token');
+    return token;
   };
 
   const getUser = () => {
@@ -23,7 +28,7 @@ const useProvideAuth = () => {
     }
   };
 
-  return [getUser(), isLoggedIn, signIn];
+  return [getUser(), isLoggedIn(), signIn];
 };
 
 export default useProvideAuth;
