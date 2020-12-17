@@ -24,9 +24,7 @@ const MovieHistory = ({userId, sessions}) => {
         return dayjs(dateTime).format('YYYY-MM-DD');
     };
 
-
     const GenerateHistory = () => {
-      
         return (
         <List renderHeader={() => 'Movie History'} className="my-list">
          {
@@ -50,7 +48,6 @@ const MovieHistory = ({userId, sessions}) => {
   
     useEffect(() => {
       GenerateHistory();
-       
     }, [])
 
     return(
