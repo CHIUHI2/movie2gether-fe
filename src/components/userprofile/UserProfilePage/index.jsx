@@ -32,10 +32,11 @@ const UserProfilePage = () => {
         setTotalPages(response.data.totalPages);
       }
       setSessions(response.data.content)
+     
        })
      
   }, [])
-
+  
   const changePage = (pageNum) => {
     setCurrentPage(pageNum);
     getBookingsWithPaginationByUserId(pageNum-1,5,user.id).then((response) => {
