@@ -8,8 +8,8 @@ const updateReview = (id, data) => {
   return api.put(`/reviews/${id}`, data);
 };
 
-const getReview = (movieId, userId) => {
-  return api.get(`/reviews?movieId=${movieId}&userId=${userId}`);
+const getReview = (sessionId, movieId, userId) => {
+  return api.get(`/reviews?sessionId=${sessionId}&movieId=${movieId}&userId=${userId}`);
 };
 
 const getReviewsByMovieIdAndPage = (movieId, page) => {

@@ -26,6 +26,7 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     getBookingsWithPaginationByUserId(0,5,user.id).then((response) => {
+      console.log(response.data);
       if(response.data.totalPages <= 0){
         setTotalPages(1);
       }else {
