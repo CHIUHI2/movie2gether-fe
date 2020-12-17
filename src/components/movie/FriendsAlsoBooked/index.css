@@ -1,0 +1,14 @@
+.friends-message-container {
+  color: #4abff5;
+  font-size: 10px;
+}
+
+.friends-list-container {
+  max-height: 90px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.more-btn {
+  text-decoration: underline;
+}

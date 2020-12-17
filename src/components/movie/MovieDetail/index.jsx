@@ -8,6 +8,7 @@ import MovieGenres from '../MovieGenres';
 import MovieRatings from '../MovieRatings';
 import MovieOverview from '../MovieOverview';
 import BookingButton from '../BookingButton';
+import FriendsAlsoBooked from '../FriendsAlsoBooked';
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -35,7 +36,10 @@ const MovieDetail = () => {
           <WhiteSpace />
           <MoviePoster posterUrl={movieDetail.posterUrl} width={400} />
           <Flex justify="between">
-            <h2>{movieDetail.title}</h2>
+            <div>
+              <h2>{movieDetail.title}</h2>
+              <FriendsAlsoBooked friends={['User']} />
+            </div>
             <BookingButton movieId={movieDetail.id} />
           </Flex>
           <div>{getFormattedReleaseDate(movieDetail.releaseDate)}</div>
