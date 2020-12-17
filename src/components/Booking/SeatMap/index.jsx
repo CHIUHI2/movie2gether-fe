@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -51,6 +51,7 @@ const SeatingMap = (props = { seats: [], bookings: [], onSelectSeatNumbers: () =
               bookings.filter((booking) => booking.seatNumber === seat.number).length > 0;
             return (
               <div
+                key={seat.number}
                 onClick={() => {
                   if (!booked) {
                     if (selectedSeatIndexes.includes(index))
@@ -76,7 +77,11 @@ const SeatingMap = (props = { seats: [], bookings: [], onSelectSeatNumbers: () =
   return (
     <>
       <div className="screen-container">SCREEN</div>
-      <div className="seating-map">{seatMapByRow.map((row) => rednerSeatByRow(row))}</div>
+      <div className="seating-map">
+        {seatMapByRow.map((row) => (
+          <React.Fragment key={row.letter}>{rednerSeatByRow(row)}</React.Fragment>
+        ))}
+      </div>
     </>
   );
 };

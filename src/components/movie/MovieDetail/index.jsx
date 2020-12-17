@@ -8,15 +8,19 @@ import MovieGenres from '../MovieGenres';
 import MovieRatings from '../MovieRatings';
 import MovieOverview from '../MovieOverview';
 import BookingButton from '../BookingButton';
+import FriendsAlsoBooked from '../FriendsAlsoBooked';
 import MovieReviewList from '../MovieReviewList';
+import useProvideAuth from '../../../hooks/use-provide-auth';
 
 const MovieDetail = () => {
+  const [user] = useProvideAuth();
   const { id } = useParams();
   const history = useHistory();
   const [movieDetail, setMovieDetail] = useState({});
 
   useEffect(() => {
-    getMovieDetail(id)
+    const { id: userId } = user;
+    getMovieDetail(id, userId)
       .then((response) => {
         setMovieDetail(response.data);
       })
@@ -36,6 +40,10 @@ const MovieDetail = () => {
           <WhiteSpace />
           <MoviePoster posterUrl={movieDetail.posterUrl} width={400} />
           <Flex justify="between">
+            <div>
+              <h2>{movieDetail.title}</h2>
+              <FriendsAlsoBooked friends={movieDetail.bookedFriends} />
+            </div>
             <h2>{movieDetail.title}</h2>
             {movieDetail.onShow && <BookingButton movieId={movieDetail.id} />}
           </Flex>

@@ -3,12 +3,13 @@ import { StarFilled } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import { getReview, addReview, updateReview } from '../../../api/review';
 import './index.css';
+import { v4 as uuidv4 } from 'uuid';
 
-const ReviewModal = ({ openModal, closeModal, userId, movie, sessionId}) => {
+const ReviewModal = ({ openModal, closeModal, userId, movie, sessionId }) => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
   const [reviewId, setReviewId] = useState(null);
-  
+
   useEffect(() => {
     getReview(sessionId, movie.id, userId).then((response) => {
       setRating(response.data.rating);
@@ -25,14 +26,14 @@ const ReviewModal = ({ openModal, closeModal, userId, movie, sessionId}) => {
         userId,
         rating,
         comment,
-      }
+      };
       addReview(review).then((response) => {
         setRating(response.data.rating);
         setComment(response.data.comment);
         setReviewId(response.data.id);
       });
-    } 
-    if (reviewId != null){
+    }
+    if (reviewId != null) {
       const updatedReview = {
         sessionId,
         movieId: movie.id,
@@ -83,6 +84,7 @@ const ReviewModal = ({ openModal, closeModal, userId, movie, sessionId}) => {
 
             return (
               <StarFilled
+                key={uuidv4()}
                 className="star"
                 style={ratingvalue <= rating ? { color: '#ffc107' } : { color: '#e4e5e9' }}
                 onClick={() => setRating(ratingvalue)}
