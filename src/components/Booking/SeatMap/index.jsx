@@ -12,6 +12,10 @@ const SeatingMap = (props = { seats: [], bookings: [], onSelectSeatNumbers: () =
   }, [props]);
 
   useEffect(() => {
+    setSelectedSeatIndexes([]);
+  }, [props.seats]);
+
+  useEffect(() => {
     props.onSelectSeatNumbers(selectedSeatIndexes.map((index) => seats[index].number));
   }, [selectedSeatIndexes]);
 
