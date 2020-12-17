@@ -1,9 +1,10 @@
 import { StarFilled } from '@ant-design/icons';
 import { Card, Pagination, WhiteSpace } from 'antd-mobile';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getReviewsByMovieIdAndPage } from '../../../api/review';
 import './index.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const PAGINATION_LOCALE = {
   prevText: 'Prev',
@@ -35,7 +36,7 @@ const MovieReviewList = ({ movieId }) => {
     return dayjs(dateTime).format('YYYY-MM-DD');
   };
 
-  const renderUserNameTitle = (review) =>(
+  const renderUserNameTitle = (review) => (
     <>
       <b>{review.userName}</b>
       <span className="review-date">{getFormattedReleaseDate(review.lastModifiedAt)}</span>
@@ -49,6 +50,7 @@ const MovieReviewList = ({ movieId }) => {
 
         return (
           <StarFilled
+            key={uuidv4()}
             className="star"
             style={ratingvalue <= review.rating ? { color: '#ffc107' } : { color: '#e4e5e9' }}
           />
@@ -62,7 +64,7 @@ const MovieReviewList = ({ movieId }) => {
       {reviewList && (
         <>
           {reviewList.map((review) => (
-            <>
+            <React.Fragment key={review.id}>
               <Card>
                 <Card.Header
                   title={renderUserNameTitle(review)}
@@ -73,7 +75,7 @@ const MovieReviewList = ({ movieId }) => {
                 </Card.Body>
               </Card>
               <WhiteSpace size="sm" />
-            </>
+            </React.Fragment>
           ))}
           {reviewPageCount > 0 && (
             <Pagination
