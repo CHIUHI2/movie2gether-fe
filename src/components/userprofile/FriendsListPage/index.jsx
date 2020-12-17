@@ -1,8 +1,8 @@
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Empty, Input } from 'antd';
-import { Flex, WhiteSpace, Card, Toast } from 'antd-mobile';
+import { Flex, WhiteSpace, Card } from 'antd-mobile';
 import { useEffect, useState } from 'react';
-import { getAllFriends, addFriend, unFriend } from '../../../api/friend';
+import { getAllFriends, addFriend, unFriend } from '../../../api/users';
 import useProvideAuth from '../../../hooks/use-provide-auth';
 
 const { Search } = Input;
@@ -11,11 +11,12 @@ const FriendsListPage = () => {
   const [user] = useProvideAuth();
   const [usernameInput, setUsernameInput] = useState('');
   const [friendsList, setFriendsList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const { id: userId } = user;
     getAllFriends(userId).then((response) => {
-      setFriendsList(response.data);
+      setFriendsList(response.data.friends);
     });
   }, []);
 
@@ -25,22 +26,29 @@ const FriendsListPage = () => {
 
   const handleAddFriend = () => {
     const { id: userId } = user;
-    addFriend(userId, usernameInput).then(() => {
-      Toast.info('Added');
+    setLoading(true);
+    addFriend(userId, usernameInput)
+      .then((response) => {
+        setFriendsList(response.data.friends);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleUnfriend = (friendName) => {
+    const { id: userId } = user;
+    unFriend(userId, friendName).then((response) => {
+      setFriendsList(response.data.friends);
     });
   };
 
-  const handleUnfriend = (friendId) => {
-    const { id: userId } = user;
-    unFriend(userId, friendId).then(() => {});
-  };
-
-  const UnfriendButton = ({ friendId }) => {
+  const UnfriendButton = ({ friendName }) => {
     return (
       <div>
         <DeleteOutlined
           onClick={() => {
-            handleUnfriend(friendId);
+            handleUnfriend(friendName);
           }}
         />
       </div>
@@ -61,13 +69,17 @@ const FriendsListPage = () => {
           enterButton="Add"
           onChange={handleChange}
           onSearch={handleAddFriend}
+          loading={loading}
         />
       </Flex>
       <WhiteSpace size="xl" />
       {friendsList.length > 0 ? (
         friendsList.map((friend) => (
-          <Card>
-            <Card.Header title={friend.userName} extra={<UnfriendButton friendId={friend.id} />} />
+          <Card key={friend.id}>
+            <Card.Header
+              title={friend.userName}
+              extra={<UnfriendButton friendName={friend.userName} />}
+            />
             <Card.Body>
               <span>{friend.email}</span>
             </Card.Body>
