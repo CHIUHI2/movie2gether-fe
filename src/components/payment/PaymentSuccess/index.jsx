@@ -6,7 +6,7 @@ import _ from 'lodash';
 const PaymentSuccess = () => {
   const location = useLocation();
   const history = useHistory();
-  const orderId = _.get(location, 'state.orderId', '');
+  const orderIds = _.get(location, 'state.orderIds', '');
 
   const handleBackToHome = () => {
     history.push('/');
@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
     <>
       <Result className="result" status="success" title="Successfully Purchased" />
       <div className="order">
-        <p id="order">Order number:{orderId} </p>
+        <p id="order">Order numbers:{orderIds.join(", ")} </p>
         <Button className="button" type="primary" key="console" onClick={handleBackToHome}>
           Back to Home
         </Button>

@@ -37,7 +37,7 @@ const MovieDetail = () => {
           <MoviePoster posterUrl={movieDetail.posterUrl} width={400} />
           <Flex justify="between">
             <h2>{movieDetail.title}</h2>
-            <BookingButton movieId={movieDetail.id} />
+            {movieDetail.onShow && <BookingButton movieId={movieDetail.id} />}
           </Flex>
           <div>{getFormattedReleaseDate(movieDetail.releaseDate)}</div>
           <WhiteSpace size="sm" />
