@@ -24,13 +24,14 @@ const ReviewModal = ({ openModal, closeModal, userId, movie }) => {
         userId,
         rating,
         comment,
-      };
+      }
       addReview(review).then((response) => {
         setRating(response.data.rating);
         setComment(response.data.comment);
         setReviewId(response.data.id);
       });
-    } else {
+    } 
+    if (reviewId != null){
       const updatedReview = {
         movieId: movie.id,
         userId,
