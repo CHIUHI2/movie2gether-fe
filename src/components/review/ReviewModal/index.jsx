@@ -4,13 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { getReview, addReview, updateReview } from '../../../api/review';
 import './index.css';
 
-const ReviewModal = ({ openModal, closeModal, userId, movie }) => {
+const ReviewModal = ({ openModal, closeModal, userId, movie, sessionId}) => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
   const [reviewId, setReviewId] = useState(null);
   
   useEffect(() => {
-    getReview(movie.id, userId).then((response) => {
+    getReview(sessionId, movie.id, userId).then((response) => {
       setRating(response.data.rating);
       setComment(response.data.comment);
       setReviewId(response.data.id);
@@ -20,6 +20,7 @@ const ReviewModal = ({ openModal, closeModal, userId, movie }) => {
   const onClose = () => {
     if (reviewId == null && rating != null && comment != null) {
       const review = {
+        sessionId,
         movieId: movie.id,
         userId,
         rating,
@@ -33,6 +34,7 @@ const ReviewModal = ({ openModal, closeModal, userId, movie }) => {
     } 
     if (reviewId != null){
       const updatedReview = {
+        sessionId,
         movieId: movie.id,
         userId,
         rating,
