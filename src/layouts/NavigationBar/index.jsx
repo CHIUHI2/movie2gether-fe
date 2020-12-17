@@ -1,5 +1,5 @@
 import './index.css';
-import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { UserOutlined, HomeOutlined } from '@ant-design/icons';
 import { NavBar } from 'antd-mobile';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
@@ -46,7 +46,7 @@ const NavigationBar = () => {
         history.push('/');
       }}
     >
-      <VideoCameraOutlined />
+      <HomeOutlined />
     </div>
   );
 
