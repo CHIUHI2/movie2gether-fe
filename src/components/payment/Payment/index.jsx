@@ -28,7 +28,7 @@ const Payment = () => {
   const onFinish = () => {
     createBooking(userId, sessionId, seatNumbers)
       .then((response) => {
-        history.push('/paymentSuccess', { orderId: response.data.id });
+        history.push('/paymentSuccess', { orderIds: response.data.map((booking)=>booking.id) });
       })
       .catch(() => {
         history.push('/paymentFailed', { sessionId, seatNumber: seatNumbers });
