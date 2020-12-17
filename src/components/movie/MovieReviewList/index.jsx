@@ -1,7 +1,9 @@
 import { StarFilled } from '@ant-design/icons';
 import { Card, Pagination, WhiteSpace } from 'antd-mobile';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { getReviewsByMovieIdAndPage } from '../../../api/review';
+import './index.css';
 
 const PAGINATION_LOCALE = {
   prevText: 'Prev',
@@ -29,7 +31,16 @@ const MovieReviewList = ({ movieId }) => {
     }
   }, [currentPage]);
 
-  const renderUserNameTitle = (review) => <b>{review.userName}</b>;
+  const getFormattedReleaseDate = (dateTime) => {
+    return dayjs(dateTime).format('YYYY-MM-DD');
+  };
+
+  const renderUserNameTitle = (review) =>(
+    <>
+      <b>{review.userName}</b>
+      <span className="review-date">{getFormattedReleaseDate(review.lastModifiedAt)}</span>
+    </>
+  );
 
   const renderRatingSection = (review) => (
     <div>
