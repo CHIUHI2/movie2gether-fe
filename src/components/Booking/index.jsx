@@ -184,6 +184,7 @@ const BookingPage = () => {
                     })}
                     onClick={() => {
                       setSelectedSessionIndex(index);
+                      setSelectedSeatNumners([]);
                     }}
                   >
                     <div>{`${dayjs(session.startTime).format('ddd, MMMM D')}`}</div>
