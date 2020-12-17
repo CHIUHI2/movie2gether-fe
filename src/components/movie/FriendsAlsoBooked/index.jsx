@@ -19,7 +19,7 @@ const FriendsAlsoBooked = ({ friends }) => {
   const generateFriendsMessage = () => {
     if (friendsCount === 1) {
       const firstFriend = _.first(friends);
-      return `${firstFriend} watched this movie`;
+      return `${firstFriend.userName} watched this movie`;
     }
 
     if (friendsCount > 1) {
@@ -27,7 +27,7 @@ const FriendsAlsoBooked = ({ friends }) => {
       return (
         <>
           <div>
-            {firstFriend} and{' '}
+            {firstFriend.userName} and{' '}
             <span className="more-btn" onClick={openModal}>
               more
             </span>{' '}
@@ -61,8 +61,8 @@ const FriendsAlsoBooked = ({ friends }) => {
             <WhiteSpace size="sm" />
             <div className="friends-list-container">
               {friends.map((friend) => (
-                <div>
-                  <span>{friend}</span>
+                <div key={friend.id}>
+                  <span>{friend.userName}</span>
                 </div>
               ))}
             </div>
