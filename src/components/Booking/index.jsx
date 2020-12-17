@@ -29,7 +29,7 @@ const BookingPage = () => {
   const [cinemaPageCount, setCinemaPageCount] = useState(0);
   const [sessions, setSessions] = useState([]);
   const [cinemas, setCinemas] = useState([]);
-  const [selectedSeatNumner, setSelectedSeatNumner] = useState(null);
+  const [selectedSeatNumner, setSelectedSeatNumners] = useState([]);
 
   useEffect(() => {
     getOnShowMovie('onShow', { isRecommend: false }).then(({ data }) => {
@@ -71,7 +71,7 @@ const BookingPage = () => {
   }
 
   useEffect(() => {
-    setSelectedSeatNumner(null);
+    setSelectedSeatNumners([]);
   }, [sessions, selectedSessionIndex]);
 
   useEffect(() => {
@@ -184,6 +184,7 @@ const BookingPage = () => {
                     })}
                     onClick={() => {
                       setSelectedSessionIndex(index);
+                      setSelectedSeatNumners([]);
                     }}
                   >
                     <div>{`${dayjs(session.startTime).format('ddd, MMMM D')}`}</div>
@@ -214,14 +215,14 @@ const BookingPage = () => {
           <SeatingMap
             seats={sessions[selectedSessionIndex].cinema.seats}
             bookings={sessions[selectedSessionIndex].bookings}
-            onSelectSeat={(seatNumber) => {
-              setSelectedSeatNumner(seatNumber);
+            onSelectSeatNumbers={(seatNumbers) => {
+              setSelectedSeatNumners(seatNumbers);
             }}
           />
           <Button
-            disabled={selectedSeatNumner === null}
+            disabled={selectedSeatNumner.length === 0}
             onClick={() => {
-              if (selectedSeatNumner === null) return;
+              if (selectedSeatNumner.length === 0) return;
               const session = sessions[selectedSessionIndex];
               history.push({
                 pathname: '/payment',
