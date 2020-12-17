@@ -8,6 +8,7 @@ import MovieGenres from '../MovieGenres';
 import MovieRatings from '../MovieRatings';
 import MovieOverview from '../MovieOverview';
 import BookingButton from '../BookingButton';
+import MovieReviewList from '../MovieReviewList';
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -45,6 +46,9 @@ const MovieDetail = () => {
           <MovieRatings rating={movieDetail.voteAverage} />
           <WhiteSpace size="lg" />
           <MovieOverview overview={movieDetail.overview} />
+          <WhiteSpace size="lg" />
+          <MovieReviewList movieId={movieDetail.id} />
+          <WhiteSpace size="lg" />
         </WingBlank>
       )}
     </>
