@@ -1,9 +1,9 @@
+import './index.css';
 import { Modal, WhiteSpace, WingBlank, TextareaItem } from 'antd-mobile';
 import { StarFilled } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { getReview, addReview, updateReview } from '../../../api/review';
-import './index.css';
 import { v4 as uuidv4 } from 'uuid';
+import { getReview, addReview, updateReview } from '../../../api/review';
 
 const ReviewModal = ({ openModal, closeModal, userId, movie, sessionId }) => {
   const [rating, setRating] = useState(null);

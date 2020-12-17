@@ -1,10 +1,10 @@
+import './index.css';
 import { StarFilled } from '@ant-design/icons';
 import { Card, Pagination, WhiteSpace } from 'antd-mobile';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
-import { getReviewsByMovieIdAndPage } from '../../../api/review';
-import './index.css';
 import { v4 as uuidv4 } from 'uuid';
+import { getReviewsByMovieIdAndPage } from '../../../api/review';
 
 const PAGINATION_LOCALE = {
   prevText: 'Prev',
