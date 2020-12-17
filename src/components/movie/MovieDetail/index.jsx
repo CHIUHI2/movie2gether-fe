@@ -44,7 +44,6 @@ const MovieDetail = () => {
               <h2>{movieDetail.title}</h2>
               <FriendsAlsoBooked friends={movieDetail.bookedFriends} />
             </div>
-            <h2>{movieDetail.title}</h2>
             {movieDetail.onShow && <BookingButton movieId={movieDetail.id} />}
           </Flex>
           <div>{getFormattedReleaseDate(movieDetail.releaseDate)}</div>
