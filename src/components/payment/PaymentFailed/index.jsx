@@ -10,13 +10,14 @@ const PaymentFailed = () => {
   const location = useLocation();
   const sessionId = _.get(location, 'state.sessionId', '');
   const seatNumber = _.get(location, 'state.seatNumber', '');
+  const movieId = _.get(location, 'state.movieId', '');
 
   const handleBackToHome = () => {
     history.push('/');
   };
 
   const handlePurchaseAgain = () => {
-    history.push('/payment', {
+    history.push(`/booking/${movieId}`, {
       sessionId,
       seatNumber,
     });
