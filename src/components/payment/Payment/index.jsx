@@ -24,14 +24,15 @@ const Payment = () => {
   const { id: userId } = user;
   const sessionId = _.get(location, 'state.sessionId', '');
   const seatNumbers = _.get(location, 'state.seatNumber', '');
+  const movieId = _.get(location, 'state.movieId', '');
 
   const onFinish = () => {
     createBooking(userId, sessionId, seatNumbers)
       .then((response) => {
-        history.push('/paymentSuccess', { orderIds: response.data.map((booking)=>booking.id) });
+        history.push('/paymentSuccess', { orderIds: response.data.map((booking) => booking.id) });
       })
       .catch(() => {
-        history.push('/paymentFailed', { sessionId, seatNumber: seatNumbers });
+        history.push('/paymentFailed', { sessionId, seatNumber: seatNumbers, movieId });
       });
   };
 

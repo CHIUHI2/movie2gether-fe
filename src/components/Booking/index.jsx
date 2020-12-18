@@ -229,6 +229,7 @@ const BookingPage = () => {
                 state: {
                   sessionId: session.id,
                   seatNumber: selectedSeatNumner,
+                  movieId,
                 },
               });
             }}
